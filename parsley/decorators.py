@@ -15,6 +15,12 @@ def parsleyfy(klass):
                     val.widget.attrs.update({"data-type": "digits"})
                 if type(val) == forms.DecimalField:
                     val.widget.attrs.update({"data-type": "number"})
+                if hasattr(val, "max_length") and val.max_length:
+                    val.widget.attrs.update({"data-maxlength": val.max_length})
+                if hasattr(val, "min_length") and val.min_length:
+                    val.widget.attrs.update({"data-minlength": val.min_length})
+
+
 
 
     return ParsleyClass

@@ -46,6 +46,17 @@ class DataTypeTest(TestCase):
         self.assertEqual(fields["age"].widget.attrs["data-type"], "digits")
         self.assertEqual(fields["income"].widget.attrs["data-type"], "number")
 
+class LengthTest(TestCase):
+    def test_length(self):
+        form = FieldTypeForm()
+        fields = form.fields
+        name_attrs = fields["name"].widget.attrs
+        self.assertTrue("data-minlength" in name_attrs)
+        self.assertEqual(name_attrs["data-minlength"], 3)
+        self.assertEqual(name_attrs["data-maxlength"], 30)
+
+
+
 
 
 
