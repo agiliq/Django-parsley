@@ -19,6 +19,9 @@ Add `parsley` to your `INSTALLED_APPS`.
 
 Eg.
 
+    from parsley.decorators import parsleyfy
+
+
     @parsleyfy
     class FieldTypeForm(forms.Form):
         name = forms.CharField(min_length=3, max_length=30)

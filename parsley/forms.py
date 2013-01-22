@@ -19,6 +19,7 @@ class FieldTypeForm(forms.Form):
     email2 = forms.EmailField(required=False)
     age = forms.IntegerField()
     income = forms.DecimalField()
+    topnav = forms.RegexField(regex="#[A-Fa-f0-9]{6}")
 
 @parsleyfy
 class FormWithWidgets(forms.Form):
