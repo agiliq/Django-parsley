@@ -29,10 +29,19 @@ class FieldTypeFormTest(TestCase):
         "Tests that parsleyfy adds data-required for things other than CharField"
         form = FieldTypeForm()
         fields = form.fields
-        self.assertEqual(fields["url"].widget.attrs, {"data-required": "true"})
-        self.assertEqual(fields["url2"].widget.attrs, {})
-        self.assertEqual(fields["email"].widget.attrs, {"data-required": "true"})
-        self.assertEqual(fields["email2"].widget.attrs, {})
+        self.assertEqual(fields["url"].widget.attrs["data-required"], "true")
+        self.assertFalse("data-required" in fields["url2"].widget.attrs)
+        self.assertEqual(fields["email"].widget.attrs["data-required"], "true")
+        self.assertFalse("data-required" in fields["email2"].widget.attrs)
+
+class DataTypeTest(TestCase):
+    def test_data_types(self):
+        "Test that URLField and EmailField get correct data-type"
+        form = FieldTypeForm()
+        fields = form.fields
+        self.assertTrue("data-type" in fields["url"].widget.attrs)
+        #self.assertEqual(fields["url2"].widget.attrs, {})
+
 
 
 

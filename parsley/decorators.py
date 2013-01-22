@@ -1,3 +1,5 @@
+from django import forms
+
 def parsleyfy(klass):
     class ParsleyClass(klass):
         def __init__(self, *args, **kwargs):
@@ -5,4 +7,7 @@ def parsleyfy(klass):
             for key, val in self.fields.items():
                 if val.required:
                     val.widget.attrs.update({"data-required": "true"})
+                if type(val) == forms.URLField:
+                    val.widget.attrs.update({"data-type": "url"})
+
     return ParsleyClass
