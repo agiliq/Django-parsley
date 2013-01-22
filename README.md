@@ -61,4 +61,4 @@ Include the parsleyjs and you are good to go.
 
 ### Bug report and Help
 
-For bug reports open a github ticket. Need help? [Contact us here](http://agiliq.com/contactus)
+For bug reports open a github ticket. Patches gratefully accepted. Need help? [Contact us here](http://agiliq.com/contactus)
