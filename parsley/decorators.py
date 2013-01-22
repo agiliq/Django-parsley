@@ -11,7 +11,10 @@ def parsleyfy(klass):
                     val.widget.attrs.update({"data-type": "url"})
                 if type(val) == forms.EmailField:
                     val.widget.attrs.update({"data-type": "email"})
-                if type(val) in [forms.IntegerField]:
+                if type(val) == forms.IntegerField:
                     val.widget.attrs.update({"data-type": "digits"})
+                if type(val) == forms.DecimalField:
+                    val.widget.attrs.update({"data-type": "number"})
+
 
     return ParsleyClass

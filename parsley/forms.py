@@ -17,3 +17,4 @@ class FieldTypeForm(forms.Form):
     email = forms.EmailField()
     email2 = forms.EmailField(required=False)
     age = forms.IntegerField()
+    income = forms.DecimalField()

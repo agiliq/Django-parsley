@@ -44,6 +44,7 @@ class DataTypeTest(TestCase):
         self.assertTrue("data-type" in fields["email"].widget.attrs)
         self.assertEqual(fields["email"].widget.attrs["data-type"], "email")
         self.assertEqual(fields["age"].widget.attrs["data-type"], "digits")
+        self.assertEqual(fields["income"].widget.attrs["data-type"], "number")
 
 
 
