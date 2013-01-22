@@ -55,6 +55,10 @@ Put this form inside a
 
 Include the parsleyjs and you are good to go.
 
+###License
+
+3 Clause BSD.
+
 ### Bug report and Help
 
 For bug reports open a github ticket. Need help? [Contact us here](http://agiliq.com/contactus)
