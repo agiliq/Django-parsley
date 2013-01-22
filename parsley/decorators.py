@@ -9,5 +9,7 @@ def parsleyfy(klass):
                     val.widget.attrs.update({"data-required": "true"})
                 if type(val) == forms.URLField:
                     val.widget.attrs.update({"data-type": "url"})
+                if type(val) == forms.EmailField:
+                    val.widget.attrs.update({"data-type": "email"})
 
     return ParsleyClass

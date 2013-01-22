@@ -40,7 +40,9 @@ class DataTypeTest(TestCase):
         form = FieldTypeForm()
         fields = form.fields
         self.assertTrue("data-type" in fields["url"].widget.attrs)
-        #self.assertEqual(fields["url2"].widget.attrs, {})
+        self.assertEqual(fields["url"].widget.attrs["data-type"], "url")
+        self.assertTrue("data-type" in fields["email"].widget.attrs)
+        self.assertEqual(fields["email"].widget.attrs["data-type"], "email")
 
 
 
