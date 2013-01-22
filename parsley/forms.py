@@ -16,3 +16,4 @@ class FieldTypeForm(forms.Form):
     url2 = forms.URLField(required=False)
     email = forms.EmailField()
     email2 = forms.EmailField(required=False)
+    age = forms.IntegerField()
