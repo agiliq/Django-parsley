@@ -19,3 +19,8 @@ class FieldTypeForm(forms.Form):
     email2 = forms.EmailField(required=False)
     age = forms.IntegerField()
     income = forms.DecimalField()
+
+@parsleyfy
+class FormWithWidgets(forms.Form):
+    description = forms.CharField(widget=forms.TextInput)
+    blurb = forms.CharField(widget=forms.TextInput(attrs={"class": "highlight"}))

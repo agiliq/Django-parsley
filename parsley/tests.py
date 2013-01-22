@@ -1,6 +1,7 @@
 from django.test import TestCase
+from django import forms
 
-from .forms import TextForm, TextForm2, FieldTypeForm
+from .forms import TextForm, TextForm2, FieldTypeForm, FormWithWidgets
 from .decorators import parsleyfy
 
 class CharFieldTest(TestCase):
@@ -54,6 +55,16 @@ class LengthTest(TestCase):
         self.assertTrue("data-minlength" in name_attrs)
         self.assertEqual(name_attrs["data-minlength"], 3)
         self.assertEqual(name_attrs["data-maxlength"], 30)
+
+
+class FormWithWidgetsTest(TestCase):
+    def test_widgets(self):
+        "Assert that @parsleyfy doesn't cloober existing attrs"
+        form = FormWithWidgets()
+        self.assertTrue(form.fields["description"].widget, forms.TextInput)
+        self.assertEqual("highlight", form.fields["blurb"].widget.attrs["class"])
+
+
 
 
 
