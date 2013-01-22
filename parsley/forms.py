@@ -9,3 +9,10 @@ class TextForm(forms.Form):
 class TextForm2(forms.Form):
     name = forms.CharField(required=True)
     university = forms.CharField(required=False)
+
+@parsleyfy
+class FieldTypeForm(forms.Form):
+    url = forms.URLField()
+    url2 = forms.URLField(required=False)
+    email = forms.EmailField()
+    email2 = forms.EmailField(required=False)
