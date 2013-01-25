@@ -1,14 +1,17 @@
 from django import forms
 from .decorators import parsleyfy
 
+
 class TextForm(forms.Form):
     name = forms.CharField(required=True,)
     university = forms.CharField(required=False)
+
 
 @parsleyfy
 class TextForm2(forms.Form):
     name = forms.CharField(required=True)
     university = forms.CharField(required=False)
+
 
 @parsleyfy
 class FieldTypeForm(forms.Form):
@@ -21,7 +24,9 @@ class FieldTypeForm(forms.Form):
     income = forms.DecimalField()
     topnav = forms.RegexField(regex="#[A-Fa-f0-9]{6}")
 
+
 @parsleyfy
 class FormWithWidgets(forms.Form):
     description = forms.CharField(widget=forms.TextInput)
-    blurb = forms.CharField(widget=forms.TextInput(attrs={"class": "highlight"}))
+    blurb = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "highlight"}))
