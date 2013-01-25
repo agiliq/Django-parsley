@@ -21,6 +21,10 @@ def parsleyfy(klass):
                     val.widget.attrs.update({"data-maxlength": val.max_length})
                 if hasattr(val, "min_length") and val.min_length:
                     val.widget.attrs.update({"data-minlength": val.min_length})
+                if hasattr(val, 'min_value') and val.min_value:
+                    val.widget.attrs.update({'data-min':val.min_value})
+                if hasattr(val, 'max_value') and val.max_value:
+                    val.widget.attrs.update({'data-max':val.max_value})
 
 
 
