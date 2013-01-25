@@ -1,5 +1,6 @@
 from django import forms
 
+
 def parsleyfy(klass):
     class ParsleyClass(klass):
         def __init__(self, *args, **kwargs):
@@ -7,22 +8,19 @@ def parsleyfy(klass):
             for key, val in self.fields.items():
                 if val.required:
                     val.widget.attrs.update({"data-required": "true"})
-                if type(val) == forms.URLField:
+                if isinstance(val, forms.URLField):
                     val.widget.attrs.update({"data-type": "url"})
-                if type(val) == forms.EmailField:
+                if isinstance(val, forms.EmailField):
                     val.widget.attrs.update({"data-type": "email"})
-                if type(val) == forms.IntegerField:
+                if isinstance(val, forms.IntegerField):
                     val.widget.attrs.update({"data-type": "digits"})
-                if type(val) == forms.DecimalField:
+                if isinstance(val, forms.DecimalField):
                     val.widget.attrs.update({"data-type": "number"})
-                if type(val) == forms.RegexField:
+                if isinstance(val, forms.RegexField):
                     val.widget.attrs.update({"data-regexp": val.regex.pattern})
                 if hasattr(val, "max_length") and val.max_length:
                     val.widget.attrs.update({"data-maxlength": val.max_length})
                 if hasattr(val, "min_length") and val.min_length:
                     val.widget.attrs.update({"data-minlength": val.min_length})
-
-
-
 
     return ParsleyClass
