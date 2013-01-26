@@ -1,6 +1,8 @@
 django-parsley
 ------------------------
 
+[![Build Status](https://travis-ci.org/agiliq/Django-parsley.png?branch=master)](https://travis-ci.org/agiliq/Django-parsley)
+
 ###What is it?
 
 [Parsleyjs](http://pasrleyjs.org/) is a JavaScript library to do client side data validations.
