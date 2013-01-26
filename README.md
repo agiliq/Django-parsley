@@ -5,7 +5,7 @@ django-parsley
 
 ###What is it?
 
-[Parsleyjs](http://pasrleyjs.org/) is a JavaScript library to do client side data validations.
+[Parsleyjs](http://parsleyjs.org/) is a JavaScript library to do client side data validations.
 It does this in a non-intrusive way via adding a `data-*` attributes to form fields.
 
 When you define a Django form, you get server side validations for free using
