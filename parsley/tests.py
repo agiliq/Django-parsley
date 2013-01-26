@@ -58,6 +58,16 @@ class LengthTest(TestCase):
         self.assertEqual(name_attrs["data-maxlength"], 30)
 
 
+class ValueTest(TestCase):
+    def test_value(self):
+        form = FieldTypeForm()
+        fields = form.fields
+        num_attrs = fields['some_num'].widget.attrs
+        self.assertTrue("data-min" in num_attrs, True)
+        self.assertTrue("data-max" in num_attrs, True)
+        self.assertEqual(num_attrs["data-min"], 10)
+        self.assertEqual(num_attrs["data-max"], 100)
+
 class FormWithWidgetsTest(TestCase):
     def test_widgets(self):
         "Assert that @parsleyfy doesn't cloober existing attrs"
