@@ -1,3 +1,1 @@
-from django.db import models
-
-# Create your models here.
+#Django requires every app to have models.
