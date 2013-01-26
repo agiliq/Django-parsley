@@ -23,6 +23,7 @@ class FieldTypeForm(forms.Form):
     age = forms.IntegerField()
     income = forms.DecimalField()
     topnav = forms.RegexField(regex="#[A-Fa-f0-9]{6}")
+    some_num = forms.IntegerField(min_value=10, max_value=100)
 
 
 @parsleyfy
