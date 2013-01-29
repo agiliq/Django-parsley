@@ -9,7 +9,7 @@ django-parsley
 It does this in a non-intrusive way via adding a `data-*` attributes to form fields.
 
 When you define a Django form, you get server side validations for free using
-the form field attributes. Django-parsley moves these to the client side, by tagging your form with `data-*` attributes.
+the form field attributes. Django-parsley adds these validations to client side, by tagging your form with `data-*` attributes.
 
 ### Installation
 
