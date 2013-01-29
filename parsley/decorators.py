@@ -26,5 +26,8 @@ def parsleyfy(klass):
                     val.widget.attrs.update({'data-min':val.min_value})
                 if hasattr(val, 'max_value') and val.max_value:
                     val.widget.attrs.update({'data-max':val.max_value})
+    ParsleyClass.__doc__ = klass.__doc__
+    ParsleyClass.__module__ = klass.__module__
+    ParsleyClass.__name__ = klass.__name__
 
     return ParsleyClass

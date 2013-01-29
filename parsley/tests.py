@@ -75,6 +75,18 @@ class FormWithWidgetsTest(TestCase):
         self.assertTrue(form.fields["description"].widget, forms.TextInput)
         self.assertEqual("highlight", form.fields["blurb"].widget.attrs["class"])
 
+class TestMetadata(TestCase):
+    def test_docstring(self):
+        form1 = TextForm()
+        form2 = parsleyfy(TextForm)()
+        self.assertEqual(form1.__doc__, form2.__doc__)
+
+    def test_module(self):
+        form1 = TextForm()
+        form2 = parsleyfy(TextForm)()
+        self.assertEqual(form1.__module__, form2.__module__)
+        #self.assertEqual(form1.__name__, form2.__name__)
+
 
 
 
