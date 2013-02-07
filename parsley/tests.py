@@ -86,7 +86,12 @@ class TestMetadata(TestCase):
         form1 = TextForm()
         form2 = parsleyfy(TextForm)()
         self.assertEqual(form1.__module__, form2.__module__)
-        #self.assertEqual(form1.__name__, form2.__name__)
+
+    def test_name(self):
+        form1 = TextForm()
+        form2 = parsleyfy(TextForm)()
+        self.assertEqual(form1.__class__.__name__, form2.__class__.__name__)
+
 
 class TestModelForm(TestCase):
     def test_model_form(self):
