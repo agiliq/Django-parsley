@@ -39,7 +39,15 @@ class StudentModelForm(forms.ModelForm):
     class Meta:
         model = Student
 
+    def __init__(self, *args, **kwargs):
+        super(StudentModelForm, self).__init__(*args, **kwargs)
+
     def save(self, *args, **kwargs):
         if not self.instance.name:
             self.name = "Luke Skywalker"
         return super(StudentModelForm, self).save(*args, **kwargs)
+
+
+
+#StudentModelForm = parsleyfy(StudentModelForm)
+     
