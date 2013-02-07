@@ -29,5 +29,6 @@ def parsleyfy(klass):
     ParsleyClass.__doc__ = klass.__doc__
     ParsleyClass.__module__ = klass.__module__
     ParsleyClass.__name__ = klass.__name__
+    ParsleyClass.__bases__ = klass.__bases__
 
     return ParsleyClass
