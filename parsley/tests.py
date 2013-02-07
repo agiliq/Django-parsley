@@ -96,8 +96,8 @@ class TestModelForm(TestCase):
         self.assertEqual(foo_attrs["data-required"], "true")
 
     def test_model_form_save(self):
-        form = StudentModelForm()
-        form.save({"name": "Luke Skywalker"})
+        form = StudentModelForm({"name": "Luke Skywalker"})
+        form.save()
 
 
 
