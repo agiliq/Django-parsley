@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django import forms
 
-from .forms import TextForm, TextForm2, FieldTypeForm, FormWithWidgets
+from .forms import TextForm, TextForm2, FieldTypeForm, FormWithWidgets, \
+                    StudentModelForm
 from .decorators import parsleyfy
 
 class CharFieldTest(TestCase):
@@ -86,6 +87,17 @@ class TestMetadata(TestCase):
         form2 = parsleyfy(TextForm)()
         self.assertEqual(form1.__module__, form2.__module__)
         #self.assertEqual(form1.__name__, form2.__name__)
+
+class TestModelForm(TestCase):
+    def test_model_form(self):
+        form = StudentModelForm()
+        fields = form.fields
+        foo_attrs = fields["name"].widget.attrs
+        self.assertEqual(foo_attrs["data-required"], "true")
+
+    def test_model_form_save(self):
+        form = StudentModelForm()
+        form.save({"name": "Luke Skywalker"})
 
 
 

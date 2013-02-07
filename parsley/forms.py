@@ -1,5 +1,6 @@
 from django import forms
 from .decorators import parsleyfy
+from .models import Student
 
 
 class TextForm(forms.Form):
@@ -32,3 +33,13 @@ class FormWithWidgets(forms.Form):
     description = forms.CharField(widget=forms.TextInput)
     blurb = forms.CharField(widget=forms.TextInput(attrs={
         "class": "highlight"}))
+
+@parsleyfy
+class StudentModelForm(forms.ModelForm):
+    class Meta:
+        model = Student
+
+    def save(self, *args, **kwargs):
+        if not self.instance.name:
+            self.name = "Luke Skywalker"
+        return super(StudentModelForm, self).save(*args, **kwargs)
