@@ -8,7 +8,10 @@ from distutils.util import convert_path
 from setuptools import setup, find_packages
 
 def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+    try:
+        return open(os.path.join(os.path.dirname(__file__), fname)).read()
+    except IOError:
+        return ""
 
 # Provided as an attribute, so you can append to these instead
 # of replicating them:
