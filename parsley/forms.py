@@ -47,7 +47,12 @@ class StudentModelForm(forms.ModelForm):
             self.name = "Luke Skywalker"
         return super(StudentModelForm, self).save(*args, **kwargs)
 
+class FormWithCleanField(forms.Form):
+    description = forms.CharField(widget=forms.TextInput)
+
+    def clean_description(self):
+        raise forms.ValidationError("Error")
+
 
 
 #StudentModelForm = parsleyfy(StudentModelForm)
-     

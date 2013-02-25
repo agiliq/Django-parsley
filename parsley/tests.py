@@ -2,7 +2,7 @@ from django.test import TestCase
 from django import forms
 
 from .forms import TextForm, TextForm2, FieldTypeForm, FormWithWidgets, \
-                    StudentModelForm
+                    StudentModelForm, FormWithCleanField
 from .decorators import parsleyfy
 
 class CharFieldTest(TestCase):
@@ -103,6 +103,12 @@ class TestModelForm(TestCase):
     def test_model_form_save(self):
         form = StudentModelForm({"name": "Luke Skywalker"})
         form.save()
+
+class TestCleanFields(TestCase):
+    def test_clean(self):
+        form = FormWithCleanField(data={"description": "foo"})
+        self.assertEqual(form.is_bound, True)
+        self.assertRaises(forms.ValidationError, form.is_valid)
 
 
 
