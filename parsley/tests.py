@@ -108,7 +108,16 @@ class TestCleanFields(TestCase):
     def test_clean(self):
         form = FormWithCleanField(data={"description": "foo"})
         self.assertEqual(form.is_bound, True)
-        self.assertRaises(forms.ValidationError, form.is_valid)
+        self.assertEqual(form.is_valid(), False)
+        self.assertTrue(hasattr(form, "clean_description"))
+
+    def test_clean_parslyfied(self):
+        form = parsleyfy(FormWithCleanField)(data={"description": "foo"})
+        self.assertEqual(form.is_bound, True)
+        self.assertEqual(form.is_valid(), False)
+        self.assertTrue(hasattr(form, "clean_description"))
+
+
 
 
 
