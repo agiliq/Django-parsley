@@ -47,6 +47,16 @@ class StudentModelForm(forms.ModelForm):
             self.name = "Luke Skywalker"
         return super(StudentModelForm, self).save(*args, **kwargs)
 
+@parsleyfy
+class FormWithCustomInit(forms.Form):
+    description = forms.CharField()
+
+    def __init__(self, *args, **kwargs):
+        super(FormWithCustomInit, self).__init__(*args, **kwargs)
+        self.fields["description"].initial = "Hello"
+
+
+
 class FormWithCleanField(forms.Form):
     description = forms.CharField(widget=forms.TextInput)
 
@@ -54,5 +64,13 @@ class FormWithCleanField(forms.Form):
         raise forms.ValidationError("Error")
 
 
+def get_state_choices():
+    return [("NY", "NY"), ("OH", "OH")]
 
-#StudentModelForm = parsleyfy(StudentModelForm)
+@parsleyfy
+class FormWithCustomChoices(forms.Form):
+    state = forms.ChoiceField(widget = forms.Select(choices=[]))
+    def __init__(self, *args, **kwargs):
+        super(FormWithCustomChoices, self).__init__(*args, **kwargs)
+        self.fields['state'] = forms.ChoiceField(
+            choices=get_state_choices())

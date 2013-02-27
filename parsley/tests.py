@@ -2,7 +2,8 @@ from django.test import TestCase
 from django import forms
 
 from .forms import TextForm, TextForm2, FieldTypeForm, FormWithWidgets, \
-                    StudentModelForm, FormWithCleanField
+                    StudentModelForm, FormWithCleanField, FormWithCustomInit, \
+                    FormWithCustomChoices
 from .decorators import parsleyfy
 
 class CharFieldTest(TestCase):
@@ -103,6 +104,17 @@ class TestModelForm(TestCase):
     def test_model_form_save(self):
         form = StudentModelForm({"name": "Luke Skywalker"})
         form.save()
+
+class TestCustomInit(TestCase):
+    def test_custom_init(self):
+        form = FormWithCustomInit()
+        self.assertEqual(form.fields["description"].initial, "Hello")
+
+    def test_custom_choices(self):
+        form = FormWithCustomChoices()
+        self.assertNotEqual(len(form.fields['state'].choices), 0)
+        self.assertEqual(form.fields['state'].choices,
+                    [("NY", "NY"), ("OH", "OH")])
 
 class TestCleanFields(TestCase):
     def test_clean(self):
