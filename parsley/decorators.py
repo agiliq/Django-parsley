@@ -18,6 +18,8 @@ def parsleyfy(klass):
                 val.widget.attrs.update({"data-type": "digits"})
             if isinstance(val, forms.DecimalField):
                 val.widget.attrs.update({"data-type": "number"})
+            if isinstance(val, forms.FloatField):
+                val.widget.attrs.update({"data-type": "number"})
             if isinstance(val, forms.RegexField):
                 val.widget.attrs.update({"data-regexp": val.regex.pattern})
             if hasattr(val, "max_length") and val.max_length:

@@ -24,6 +24,7 @@ class FieldTypeForm(forms.Form):
     email2 = forms.EmailField(required=False)
     age = forms.IntegerField()
     income = forms.DecimalField()
+    income2 = forms.FloatField()
     topnav = forms.RegexField(regex="#[A-Fa-f0-9]{6}")
     some_num = forms.IntegerField(min_value=10, max_value=100)
 

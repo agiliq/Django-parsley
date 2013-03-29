@@ -48,6 +48,7 @@ class DataTypeTest(TestCase):
         self.assertEqual(fields["email"].widget.attrs["data-type"], "email")
         self.assertEqual(fields["age"].widget.attrs["data-type"], "digits")
         self.assertEqual(fields["income"].widget.attrs["data-type"], "number")
+        self.assertEqual(fields["income2"].widget.attrs["data-type"], "number")
         self.assertEqual(fields["topnav"].widget.attrs["data-regexp"], "#[A-Fa-f0-9]{6}")
 
 class LengthTest(TestCase):
