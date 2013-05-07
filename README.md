@@ -11,6 +11,8 @@ It does this in a non-intrusive way via adding a `data-*` attributes to form fie
 When you define a Django form, you get server side validations for free using
 the form field attributes. Django-parsley adds these validations to client side, by tagging your form with `data-*` attributes.
 
+Parsley plays well with `crispy-forms` et all.
+
 ### Installation
 
 Add `parsley` to your `INSTALLED_APPS`.
