@@ -1,5 +1,5 @@
 from django import forms
-from .decorators import parsleyfy
+from parsley.decorators import parsleyfy
 from .models import Student
 
 

@@ -1,10 +1,12 @@
 from django.test import TestCase
 from django import forms
 
-from .forms import TextForm, TextForm2, FieldTypeForm, FormWithWidgets, \
-                    StudentModelForm, FormWithCleanField, FormWithCustomInit, \
-                    FormWithCustomChoices
-from .decorators import parsleyfy
+from parsley.decorators import parsleyfy
+
+from .forms import (TextForm, TextForm2, FieldTypeForm, FormWithWidgets,
+        StudentModelForm, FormWithCleanField, FormWithCustomInit,
+        FormWithCustomChoices)
+
 
 class CharFieldTest(TestCase):
     def test_basic(self):
@@ -20,12 +22,14 @@ class CharFieldTest(TestCase):
         self.assertEqual(form.fields["name"].widget.attrs, {"data-required": "true"})
         self.assertEqual(form.fields["university"].widget.attrs, {})
 
+
 class CharFieldDecoratedTest(TestCase):
     def test_decorated(self):
         "Tests that parsleyfy works as a class Decorator"
         form = TextForm2()
         self.assertEqual(form.fields["name"].widget.attrs, {"data-required": "true"})
         self.assertEqual(form.fields["university"].widget.attrs, {})
+
 
 class FieldTypeFormTest(TestCase):
     def test_fields(self):
@@ -36,6 +40,7 @@ class FieldTypeFormTest(TestCase):
         self.assertFalse("data-required" in fields["url2"].widget.attrs)
         self.assertEqual(fields["email"].widget.attrs["data-required"], "true")
         self.assertFalse("data-required" in fields["email2"].widget.attrs)
+
 
 class DataTypeTest(TestCase):
     def test_data_types(self):
@@ -50,6 +55,7 @@ class DataTypeTest(TestCase):
         self.assertEqual(fields["income"].widget.attrs["data-type"], "number")
         self.assertEqual(fields["income2"].widget.attrs["data-type"], "number")
         self.assertEqual(fields["topnav"].widget.attrs["data-regexp"], "#[A-Fa-f0-9]{6}")
+
 
 class LengthTest(TestCase):
     def test_length(self):
@@ -71,12 +77,14 @@ class ValueTest(TestCase):
         self.assertEqual(num_attrs["data-min"], 10)
         self.assertEqual(num_attrs["data-max"], 100)
 
+
 class FormWithWidgetsTest(TestCase):
     def test_widgets(self):
         "Assert that @parsleyfy doesn't cloober existing attrs"
         form = FormWithWidgets()
         self.assertTrue(form.fields["description"].widget, forms.TextInput)
         self.assertEqual("highlight", form.fields["blurb"].widget.attrs["class"])
+
 
 class TestMetadata(TestCase):
     def test_docstring(self):
@@ -104,7 +112,8 @@ class TestModelForm(TestCase):
 
     def test_model_form_save(self):
         form = StudentModelForm({"name": "Luke Skywalker"})
-        form.save()
+        form.save(commit=False)
+
 
 class TestCustomInit(TestCase):
     def test_custom_init(self):
@@ -116,6 +125,7 @@ class TestCustomInit(TestCase):
         self.assertNotEqual(len(form.fields['state'].choices), 0)
         self.assertEqual(form.fields['state'].choices,
                     [("NY", "NY"), ("OH", "OH")])
+
 
 class TestCleanFields(TestCase):
     def test_clean(self):
@@ -129,15 +139,3 @@ class TestCleanFields(TestCase):
         self.assertEqual(form.is_bound, True)
         self.assertEqual(form.is_valid(), False)
         self.assertTrue(hasattr(form, "clean_description"))
-
-
-
-
-
-
-
-
-
-
-
-
