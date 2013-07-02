@@ -50,7 +50,7 @@ Note the `data-*` attributes.
 
 You could also do
 
-FieldTypeForm = parsleyfy(FieldTypeForm)
+    FieldTypeForm = parsleyfy(FieldTypeForm)
 
 Which is the same thing.
 
