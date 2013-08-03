@@ -3,9 +3,9 @@ from django import forms
 
 from parsley.decorators import parsleyfy
 
-from .forms import (TextForm, TextForm2, FieldTypeForm, FormWithWidgets,
-        StudentModelForm, FormWithCleanField, FormWithCustomInit,
-        FormWithCustomChoices)
+from .forms import (TextForm, TextForm2, FieldTypeForm, ExtraDataForm,
+        FormWithWidgets, StudentModelForm, FormWithCleanField,
+        FormWithCustomInit, FormWithCustomChoices)
 
 
 class CharFieldTest(TestCase):
@@ -139,3 +139,23 @@ class TestCleanFields(TestCase):
         self.assertEqual(form.is_bound, True)
         self.assertEqual(form.is_valid(), False)
         self.assertTrue(hasattr(form, "clean_description"))
+
+
+class TestExtraAttributes(TestCase):
+    def test_equalto(self):
+        form = ExtraDataForm()
+        attrs = form.fields["email2"].widget.attrs
+        self.assertEqual(attrs, {
+            "data-type": "email",
+            "data-required": "true",
+            "data-equalto-message": "Must match",
+            "data-equalto": "id_email",
+        })
+
+    def test_default_data(self):
+        form = ExtraDataForm()
+        attrs = form.fields["name"].widget.attrs
+        self.assertEqual(attrs, {
+            "data-required": "true",
+            "data-error-message": "Name invalid",
+        })

@@ -30,6 +30,24 @@ class FieldTypeForm(forms.Form):
 
 
 @parsleyfy
+class ExtraDataForm(forms.Form):
+    name = forms.CharField()
+    email = forms.EmailField()
+    email2 = forms.EmailField()
+
+    class Meta:
+        parsley_extras = {
+            "name": {
+                "error-message": "Name invalid",
+            },
+            "email2": {
+                "equalto": "email",
+                "equalto-message": "Must match",
+            }
+        }
+
+
+@parsleyfy
 class FormWithWidgets(forms.Form):
     description = forms.CharField(widget=forms.TextInput)
     blurb = forms.CharField(widget=forms.TextInput(attrs={
