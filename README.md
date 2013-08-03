@@ -2,6 +2,7 @@ django-parsley
 ------------------------
 
 [![Build Status](https://travis-ci.org/agiliq/Django-parsley.png?branch=master)](https://travis-ci.org/agiliq/Django-parsley)
+[![Coverage Status](https://coveralls.io/repos/agiliq/Django-parsley/badge.png?branch=master)](https://coveralls.io/r/agiliq/Django-parsley)
 
 ###What is it?
 

@@ -12,5 +12,8 @@ env:
 
 install:
   - pip install --use-mirrors $DJANGO
+  - pip install --use-mirrors coverage coveralls
 
-script: python setup.py test
+script: coverage run setup.py test
+
+after_success: coveralls
