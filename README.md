@@ -16,7 +16,8 @@ Parsley plays well with `crispy-forms` et all.
 
 ### Installation
 
-Add `parsley` to your `INSTALLED_APPS`.
+1. pip install `parsley` (or add to your requirements.txt)
+2. Because we do not add any models, add `parsley` to your `INSTALLED_APPS` is not necessary.
 
 ### Usage
 
