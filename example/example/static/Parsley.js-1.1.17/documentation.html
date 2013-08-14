@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Parsley.js Documentation & API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Keywords" content="javascript form validation, javascript, form, validation, jquery, plungin, html, UX">
+    <meta name="description" content="Parsley is a dead simple javascript form validation, powerful and UX aware">
+    <meta name="author" content="Guillaume Potier">
+
+    <!-- Le styles -->
+    <link href="components/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="http://yandex.st/highlightjs/7.3/styles/github.min.css" rel="stylesheet" />
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+      h3.muted {
+          color: #08C;
+      }
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 940px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+      section {
+          margin-bottom: 45px;
+      }
+      form {
+          margin: 0;
+      }
+      input.parsley-success, textarea.parsley-success {
+        color: #468847 !important;
+        background-color: #DFF0D8 !important;
+        border: 1px solid #D6E9C6 !important;
+      }
+      input.parsley-error, textarea.parsley-error {
+        color: #B94A48 !important;
+        background-color: #F2DEDE !important;
+        border: 1px solid #EED3D7 !important;
+      }
+      input {
+          width: 150px;
+          margin: 0 2px !important;
+      }
+      ul.parsley-error-list {
+          font-size: 11px;
+          margin: 2px;
+          list-style-type:none;
+      }
+      ul.parsley-error-list li {
+          line-height: 11px;
+      }
+      .social-buttons {
+          padding: 5px 20px;
+      }
+      h3 {
+          color: #FB4006;
+      }
+
+      .container-narrow > hr {
+        margin:15px 0 0 0;
+      }
+
+      @media only screen
+      and (min-device-width : 320px)
+      and (max-device-width : 480px) {
+          .not-for-mobile {
+              display: none;
+          }
+      }
+    </style>
+    <link href="components/bootstrap/docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+      <a href="https://github.com/guillaumepotier/Parsley.js"><img style="position: fixed; top: 0; right: 0; border: 0; z-index:9999" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+      <div class="container-narrow">
+
+          <div class="masthead">
+            <ul class="nav nav-pills pull-right">
+              <li><a href="index.html">Home</a></li>
+              <li class="active"><a href="documentation.html">Documentation</a></li>
+              <li><a href="doc/api/index.html" target="_blank">API</a></li>
+            </ul>
+            <h3 class="muted">
+                Parsley.js
+
+                <span class="social-buttons inline-block">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-related="garlicjs: auto persist form values to avoid data loss,guillaumepotier" data-url="http://parsleyjs.org" data-lang="en" data-text="Parsley.js: never write a single javascript line anymore to validate your forms FrontEnd. #ui #ux #javascript"></a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+                    <iframe src="http://ghbtns.com/github-btn.html?user=guillaumepotier&repo=Parsley.js&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+
+                    <iframe src="http://ghbtns.com/github-btn.html?user=guillaumepotier&repo=Parsley.js&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+
+                </span>
+
+            </h3>
+          </div>
+
+        <hr>
+
+        <div class="row-fluid marketing">
+            <h2>Demonstration</h2>
+
+                <a name="parsleydemoform"></a>
+                <table id="demonstration-form" class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th width="27%">Classy demo</th>
+                            <th width="73%" class="not-for-mobile">HTML Code (yes, no JS !)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <form id="demo-form">
+                                    <label for="fullname">Full Name * :</label>
+                                    <input type="text" id="fullname" name="fullname" data-required="true" />
+
+                                    <label for="email">Email * :</label>
+                                    <input type="text" id="email" name="email" data-type="email" data-trigger="change" data-required="true" />
+
+                                    <label for="website">Website :</label>
+                                    <input type="text" id="website" name="website" data-trigger="change" data-type="url" />
+
+                                    <label for="message">Message (20 chars min, 200 max) :</label>
+                                    <textarea id="message" name="message" data-trigger="keyup" data-rangelength="[20,200]"></textarea>
+
+                                    <input type="hidden" name="superhidden" id="superhidden">
+                                    <br/><span class="btn btn" id="demo-form-valid" onclick="javascript:$('#demo-form').parsley( 'validate' );"><i class="icon-ok"></i></span>
+                                </form>
+                                <small>Please, note that this demo form is not a perfect example of UX-awareness. The aim here is to show a quick overview of data-API and Parsley customizable behavior.</small>
+                            </td>
+                            <td class="not-for-mobile">
+<pre><code>&lt;form id="demo-form" data-validate="parsley">
+    &lt;label for="fullname">Full Name * :&lt;/label>
+    &lt;input type="text" id="fullname" name="fullname" data-required="true" />
+
+    &lt;label for="email">Email * :&lt;/label>
+    &lt;input type="text" id="email" name="email" data-trigger="change" data-required="true" data-type="email" />
+
+    &lt;label for="website">Website :&lt;/label>
+    &lt;input type="text" id="website" name="website" data-trigger="change" data-type="url" />
+
+    &lt;label for="message">Message (20 chars min, 200 max) :&lt;/label>
+    &lt;textarea id="message" name="message" data-trigger="keyup" data-rangelength="[20,200]">&lt;/textarea>
+&lt;/form></code></pre>
+                            </td>
+                        </tr>
+                </table>
+
+                <div class="alert alert-block alert-info">
+                <span class="label label-important">Heads up!</span> <strong>Le #UX touch</strong>:
+                <ul>
+                    <li>
+                        <strong>Min char validation</strong>: Parsley by default <strong>does not proceed with field validation when less than 3 chars have been input</strong>. Do not assault your users with error messages too soon! <i>(this behavior is configurable)</i>.
+                    </li>
+                    <li>
+                        <strong>Quick error removal</strong>: when a field is detected and shown as invalid, further checks are done on each keypress to try to <strong>quickly remove error messages once the field is ok</strong>.
+                    </li>
+                    <li>
+                        <strong>Control focusing on error</strong>: on form submission, the first error field is focused to <strong>allow the user to easily start fixing errors</strong>. <i>(this behavior is configurable)</i>
+                    </li>
+                </ul>
+                </div>
+
+                <hr>
+
+            <a name="top"></a>
+            <h2>Documentation</h2>
+
+            <ol>
+                <li><a href="#installation"><strong>Installation &amp; usage</strong>: one or two inclusions!</a></li>
+                <li><a href="#parsleyform"><strong>Parsley Form</strong>: add some Parsley validation to your forms!</a></li>
+                <li><a href="#parsleyfield"><strong>Parsley Field</strong>: customize each validated field validation behavior </a></li>
+                <li>
+                  <a href="#validators"><strong>Validators</strong>: learn the various validations you could do with Parsley</a>
+                  <ol>
+                      <li><a href="#basic-constraints">Basic constraints</a></li>
+                      <li><a href="#type-constraints">Type constraints</a></li>
+                      <li><a href="#extra-constraints">Extra constraints</a></li>
+                  </ol>
+                </li>
+                <li>
+                    <a href="#javascript"><strong>Javascript</strong>: yes, you still can do some javascript with Parsley. Intermediate level only!</a>
+                    <ol>
+                          <li><a href="#javascript-general">General</a></li>
+                          <li><a href="#javascript-form">Form</a></li>
+                          <li><a href="#javascript-fields">Fields</a></li>
+                      </ol>
+                </li>
+                <li>
+                    <a href="#parsleyclasses"><strong>Parsley CSS</strong>: last but not least, Parsley CSS classes</a>
+                </li>
+                <li>
+                    <a href="#plugins-and-localization"><strong>Plugins &amp; Localization</strong>: extend Parsley messages, validators, templates and more!</a>
+                </li>
+                <li>
+                  <a href="#integrations"><strong>Integrations</strong>: Use parsley from other frameworks.
+                </li>
+            </ol>
+
+            <hr>
+
+            <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <section>
+              <a name="installation"></a>
+              <h3>Parsley Installation</h3>
+              <p>Just include the <a href="https://github.com/guillaumepotier/Parsley.js/blob/master/dist/parsley.min.js">Parsley.js</a> file (with <a href="http://jquery.com/">jQuery</a> or <a href="http://zeptojs.com/">Zepto</a> with <strong><a href="https://github.com/madrobby/zepto#building">data and fx_methods modules</a></strong> added) or use <a href="https://github.com/guillaumepotier/Parsley.js/blob/master/dist/parsley-standalone.min.js">Parsley standalone</a> (with Zepto bundled inside)</p>
+<pre><code>&lt;script type="text/javascript" src="jquery.js">&lt;/script>
+&lt;script type="text/javascript" src="parsley.js">&lt;/script>
+
+&lt;form data-validate="parsley">
+  [...]
+&lt;/form></code></pre>
+            </section>
+            <a href="#top" class="top pull-right">Top</a>
+
+            <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <section>
+                <a name="parsleyform"></a>
+                <h3>Parsley Form</h3>
+                <p>This is the main Parsley form validation factory, where you decide if a form is validated, and set some extra options.</p>
+                <pre><code>&lt;form data-validate="parsley">&lt;/form></code></pre>
+                 <div class="alert alert-block alert-info">
+                <span class="label label-important">Heads up!</span> <strong>HTML5</strong>:
+                If you use HTML5 validation feature, add: <code>novalidate</code> attribute to <code>form</code> tag.
+                </div>
+                <h4>Properties</h4>
+                <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                        <th class="not-for-mobile">Demonstration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>data-validate</code></td>
+                        <td></td>
+                        <td>Bind Parsley validation to the form and its items with validation constraints</td>
+                        <td  class="not-for-mobile"></td>
+                    </tr>
+                    <tr>
+                        <td><code>data-show-errors</code></td>
+                        <td>true</td>
+                        <td>Choose to show or not Parsley error messages & success / errors classes</td>
+                        <td  class="not-for-mobile"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>data-focus</code>
+                        </td>
+                        <td>
+                            first
+                        </td>
+                        <td>
+                            Specify which field will be focused first on form validation errors. <code>first</code>, <code>last</code> and <code>none</code> allowed
+                        </td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley" id="focus-form" data-focus="last">
+                                            <p><input type="text" data-type="email" data-required="true" placeholder="won't have focus" /><p>
+                                            <p><input type="text" data-type="email" data-required="true" placeholder="will have focus" /></p>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#focus-form').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>data-bind</code></td>
+                        <td></td>
+                        <td>The attribute data-validate must be used on a form. However, if you want to bind the validation to another DOM element, just add this attribute and set it to <code>true</code></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            </section>
+            <a href="#top" class="top pull-right">Top</a>
+
+            <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <section>
+                <a name="parsleyfield"></a>
+                <h3>Parsley Field</h3>
+                <p>Once your form is validated by Parsley, add validation constraints and various other options.</p>
+<pre><code>&lt;form data-validate="parsley">
+    &lt;input type="text" name="email" data-type="email" />
+&lt;/form></code></pre>
+                <h4>Properties</h4>
+                <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                        <th class="not-for-mobile">Demonstration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <code>data-trigger</code>
+                        </td>
+                        <td>none</td>
+                        <td>Specify one or many javascript events that will trigger item validation. eg: <code>data-trigger="change"</code>. To set multiple events, separate them by a space <code>data-trigger="focusin focusout"</code>.<br/><a href="http://api.jquery.com/category/events/">See the various events supported by jQuery.</a></td>
+                        <td  class="not-for-mobile">
+                            <form data-validate="parsley">
+                                <p><input type="text" data-type="email" data-trigger="keyup" data-validation-minlength="0" placeholder="keyup validation trigger" /><p>
+                                <p><input type="text" data-type="email" data-trigger="change" data-validation-minlength="0" placeholder="change validation trigger" /></p>
+                                <input type="checkbox" name="mincheckdemo[]" data-mincheck="2" value="foo" data-trigger="change" />
+                                <input type="checkbox" name="mincheckdemo[]" value="bar" />
+                                <input type="checkbox" name="mincheckdemo[]" value="baz" />
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>data-value</code>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            Override the value attribute of a form field. Useful for file inputs, where you're not allowed to
+                            set a value. <br/>
+                            eg: <code>data-value="uploadedfile.png"</code>
+                        </td>
+                        <td class="not-for-mobile">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>data-validation-minlength</code>
+                        </td>
+                        <td>
+                            3
+                        </td>
+                        <td>
+                            Specify how many characters need to be input before the the validation process fires.<br/>
+                            eg: <code>data-validation-minlength="4"</code>
+                        </td>
+                        <td class="not-for-mobile">
+                            <form data-validate="parsley">
+                                <p><input type="text" data-type="email" data-trigger="keyup" placeholder="default keyup validation" /><p>
+                                <p><input type="text" data-type="email" data-trigger="keyup" data-validation-minlength="8" placeholder="8 chars keyup validation" /></p>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>data-error-message</code>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            Customize a unique global message for this field. Shown if one constraint fails.
+                            <br/>eg: <pre><code>data-type="alphanum" data-rangelength="[10,10]"
+data-error-message="You must enter a 10 characters alphanumeric value"</code></pre>
+                        </td>
+                        <td class="not-for-mobile">
+                            <form data-validate="parsley">
+                                <p><input type="text" data-type="alphanum" data-rangelength="[10,10]" data-trigger="keyup" data-error-message="You must enter a 10 characters alphanumeric value" placeholder="custom error message" /><p>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>data-error-container</code>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <span style="color:red; !important" id="demoerrorcontainer"></span>
+                            Specify here the container where Parsley should set the errors.
+                            <br/>eg: <pre><code>data-error-container="ul#myproperlabel li.someclass"</code></pre>
+                        </td>
+                        <td class="not-for-mobile">
+                            <form data-validate="parsley">
+                                <p><input type="text" data-type="email" data-trigger="keyup" data-validation-minlength="0" data-error-container="#demoerrorcontainer" placeholder="error will pop above text on the left" /><p>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>data-`constraintName`-message</code><br/><br/>
+                            <code>data-type-`type`-message</code>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            Customize the error message for the field constraint.<br/>
+                            eg: <code>data-minlength-message="Custom minlength message"</code><br/><br/>
+                            <code>data-type-email-message="Custom email message"</code>
+                        </td>
+                        <td class="not-for-mobile">
+                            <form data-validate="parsley">
+                                <p><input type="text" data-type="email" data-minlength="20" data-trigger="keyup" data-type-email-message="Custom email message" data-minlength-message="Custom minlength message" placeholder="custom error messages" /><p>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </section>
+            <a href="#top" class="top pull-right">Top</a>
+
+            <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <section>
+                <a name="validators"></a>
+                <div class="page-header">
+                    <h3>Built-in Validators</h3>
+                </div>
+                <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>API</th>
+                        <th>Description</th>
+                        <th class="not-for-mobile">Demonstration</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td colspan="4">
+                            <a name="basic-constraints"></a>
+                            <h4>Basic constraints</h4>
+                        </td>
+                    </tr>
+
+                    <!-- Required -->
+                    <tr>
+                        <td>Required</td>
+                        <td>
+                            <code>data-required="true"</code><br/><br/>
+                            <code>class="required"</code><br/><br/>
+                            <span class="label label-info">HTML5</span><code>required="required"</code>
+                        </td>
+                        <td>Validate that a required field has been filled.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley" id="form-required">
+                                            <input type="text" id="data-required" data-required="true" placeholder="required field" /><br/><br/>
+                                            <select id="select-required" data-required="true">
+                                                <option value="">Please choose</option>
+                                                <option value="foo">Foo</option>
+                                                <option value="bar">Bar</option>
+                                            </select><br/>
+                                            Radio: <input type="radio" name="radiorequired" value="foo" id="radio-required" data-required="true"/>
+                                            <input type="radio" name="radiorequired" id="radio-required2" value="bar" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#form-required').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Notblank -->
+                    <tr>
+                        <td>Not Blank</td>
+                        <td>
+                            <code>data-notblank="true"</code>
+                        </td>
+                        <td>Validates that a value is not blank, defined as not equal to a blank string.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-notblank" data-notblank="true" placeholder="not blank field" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-notblank').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Minlength -->
+                    <tr>
+                        <td>Min Length</td>
+                        <td>
+                            <code>data-minlength="6"</code>
+                        </td>
+                        <td>Validates that the length of a string is at least as long as the given limit.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-minlength" data-minlength="6" placeholder="minlength = 6" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-minlength').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- MaxLength -->
+                    <tr>
+                        <td>Max Length</td>
+                        <td>
+                            <code>data-maxlength="6"</code>
+                        </td>
+                        <td>Validates that the length of a string is not larger than the given limit.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-maxlength" data-maxlength="6" placeholder="maxlength = 6" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-maxlength').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- RangeLength -->
+                    <tr>
+                        <td>Range Length</td>
+                        <td>
+                            <code>data-rangelength="[5,10]"</code>
+                        </td>
+                        <td>Validates that a given string length is between some minimum and maximum value.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-rangelength" data-rangelength="[5,10]" placeholder="rangelength = [5,10]" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-rangelength').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Min -->
+                    <tr>
+                        <td>Min</td>
+                        <td>
+                            <code>data-min="6"</code><br/><br/>
+                            <span class="label label-info">HTML5</span><code>type="number" min="6"</code>
+                        </td>
+                        <td>Validates that a given number is greater than some minimum number.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-minimum" data-min="6" placeholder="min = 6" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-minimum').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Max -->
+                    <tr>
+                        <td>Max</td>
+                        <td>
+                            <code>data-max="100"</code><br/><br/>
+                            <span class="label label-info">HTML5</span><code>type="number" max="100"</code>
+                        </td>
+                        <td>Validates that a given number is less than some maximum number.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-maximum" data-max="100" placeholder="max = 100" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-maximum').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Range -->
+                    <tr>
+                        <td>Range</td>
+                        <td>
+                            <code>data-range="[6, 100]"</code><br/><br/>
+                            <span class="label label-info">HTML5</span><code>type="range" min="6" max="100"</code>
+                        </td>
+                        <td>Validates that a given number is between some minimum and maximum number.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-range" data-range="[6, 100]" placeholder="range = [6,100]" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-range').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- RegExp -->
+                    <tr>
+                        <td>RegExp</td>
+                        <td>
+                            <code>data-regexp="&lt;regexp>"</code><br/><br/>
+                            <span class="label label-info">HTML5</span><code>pattern="regexp"</code>
+                        </td>
+                        <td>Validates that a value matches a specific regular expression. eg: validate a color hexadecimal code: <code>data-regexp="#[A-Fa-f0-9]{6}"</code>.<br/><br/>Add a flag to <code>Regexp()</code> function: <code>data-regexp-flag="i"</code> for example to make regexp case unsensitive</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-regexp" data-regexp="#[A-Fa-f0-9]{6}" placeholder="hexa color code" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-regexp').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- EqualTo -->
+                    <tr>
+                        <td>Equal To</td>
+                        <td>
+                            <code>data-equalto="#elem"</code>
+                        </td>
+                        <td>Validates that a value is identical to #elem value. Useful for password repeat validation.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="eqalToModel" data-equalTo="#eqalToModel" value="foo" />
+                                            <input type="text" id="data-equalto" data-equalTo="#eqalToModel" placeholder="equal to foo" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-equalto').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- minChecked -->
+                    <tr>
+                        <td>Min check</td>
+                        <td>
+                            <code>data-mincheck="2"</code>
+                        </td>
+                        <td>Validates that a certain minimum number of checkboxes in a group are checked. You can define a group by giving the same name to radio / checkboxes elements or add a <code>data-group="mygroup"</code> property to each one of them</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <small>Check at least 2 checkboxes:</small>
+                                        <form data-validate="parsley">
+                                            <input type="checkbox" id="mincheck" name="mincheck[]" data-mincheck="2" value="foo" />
+                                            <input type="checkbox" name="mincheck[]" value="bar" />
+                                            <input type="checkbox" name="mincheck[]" value="baz" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#mincheck').parsley( 'validate' );">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- maxChecked -->
+                    <tr>
+                        <td>Max check</td>
+                        <td>
+                            <code>data-maxcheck="2"</code>
+                        </td>
+                        <td>Validates that a certain maximum number of checkboxes in a group are checked. You can define a group by giving the same name to radio / checkboxes elements or add a <code>data-group="mygroup"</code> property to each one of them</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <small>Check 2 checkboxes maximum:</small>
+                                        <form data-validate="parsley">
+                                            <input type="checkbox" id="maxcheck" name="maxcheck[]" data-maxcheck="2" value="foo" />
+                                            <input type="checkbox" name="maxcheck[]" value="bar" />
+                                            <input type="checkbox" name="maxcheck[]" value="baz" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#maxcheck').parsley( 'validate' );">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- rangeChecked -->
+                    <tr>
+                        <td>Range check</td>
+                        <td>
+                            <code>data-rangecheck="[1,2]"</code>
+                        </td>
+                        <td>Validates that the number of checked checkboxes in a group is with a certain range. You can define a group by giving the same name to radio / checkboxes elements or add a <code>data-group="mygroup"</code> property to each one of them</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <small>Check b/w 1&amp;2 checkboxes:</small>
+                                        <form data-validate="parsley">
+                                            <span>
+                                                <input type="checkbox" id="rangecheck" name="rangecheck[]" data-rangecheck="[1,2]" value="foo" />
+                                                <input type="checkbox" name="rangecheck[]" value="bar" />
+                                                <input type="checkbox" name="rangecheck[]" value="baz" />
+                                            </span>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#rangecheck').parsley( 'validate' );">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Remote -->
+                    <tr>
+                        <td>Remote (Ajax)</td>
+                        <td>
+                            <code>data-remote="http://yoururl.com"</code>
+                        </td>
+                        <td colspan="2"><strong>Custom ajax validation made simple.</strong><br/>
+                          <code>data-remote-method="POST"</code> to change default <code>GET</code> call.<br/>
+                          <code>data-remote-datatype="jsonp"</code> if you make cross domain ajax call and expect <code>jsonp</code><br/>
+                          Parsley will accept these valid returns with a 200 response code: <code>1</code>, <code>true</code>, <code>{ "success": "..." }</code> and assume false otherwise<br/>
+                          You can show frontend server-side specific error messages by returning <code>{ "error": "your custom message" }</code> or <code>{ "message": "your custom message" }</code>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4">
+                            <a name="type-constraints"></a>
+                            <h4>Type Constraints</h4>
+                        </td>
+                    </tr>
+
+                    <!-- Email -->
+                    <tr>
+                        <td>Email</td>
+                        <td>
+                            <code>data-type="email"</code><br/><br/>
+                            <span class="label label-info">HTML5</span><code>type="email"</code>
+                        </td>
+                        <td>Validates that a value is a valid email address.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-email" data-type="email" placeholder="email" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-email').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Url -->
+                    <tr>
+                        <td>Url</td>
+                        <td>
+                            <code>data-type="url"</code>
+                            <code>type="url"</code>
+                        </td>
+                        <td>Validates that a value is a valid url.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-url" data-type="url" placeholder="url" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-url').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Url Strict -->
+                    <tr>
+                        <td>Url strict</td>
+                        <td>
+                            <code>data-type="urlstrict"</code>
+                        </td>
+                        <td>Validates that a value is a valid strict URL, ie: with one of <code>http</code>, <code>https</code>, <code>ftp</code>, <code>git</code> allowed protocols.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-url-strict" data-type="urlstrict" placeholder="urlstrict" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-url-strict').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Digits -->
+                    <tr>
+                        <td>Digits</td>
+                        <td>
+                            <code>data-type="digits"</code>
+                        </td>
+                        <td>Validates that a value is only digits.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-digits" data-type="digits" placeholder="digits" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-digits').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Number -->
+                    <tr>
+                        <td>Number</td>
+                        <td>
+                            <code>data-type="number"</code><br/><br/>
+                            <span class="label label-info">HTML5</span><code>type="number"</code>
+                        </td>
+                        <td>Validates that a value is a valid number.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-number" data-type="number" placeholder="number" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-number').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Alphanum -->
+                    <tr>
+                        <td>Alphanum</td>
+                        <td>
+                            <code>data-type="alphanum"</code>
+                        </td>
+                        <td>Validates that a value is a valid alphanumeric string.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-alphanum" data-type="alphanum" placeholder="alphanumeric string" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-alphanum').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- DateIso -->
+                    <tr>
+                        <td>Date Iso</td>
+                        <td>
+                            <code>data-type="dateIso"</code>
+                        </td>
+                        <td>Validates that a value is a valid ISO date.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-dateIso" data-type="dateIso" placeholder="YYYY-MM-DD" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-dateIso').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Phone -->
+                    <tr>
+                        <td>Phone</td>
+                        <td>
+                            <code>data-type="phone"</code>
+                        </td>
+                        <td>Validates that a value is a valid phone number.</td>
+                        <td class="not-for-mobile">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form data-validate="parsley">
+                                            <input type="text" id="data-phone" data-type="phone" placeholder="(XXX) XXXX XXX" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-small" onclick="javascript:$('#data-phone').parsley('validate');">
+                                            <i class="icon-ok"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <a name="extra-constraints"></a>
+            <h4>Extra Validators</h4>
+            <p>
+                There are some extra validators, not shipped along with default Parsley, because they're more specific and less common, and there is no need to add weight to Parsley instead of calling these validators only when needed. Just call <code>parsley.extend.js</code> or <code>dist/parsley.extend.min.js</code> like this:
+<pre><code>&lt;script type="text/javascript" src="parsley.extend.fr.js">&lt;/script>
+&lt;script type="text/javascript" src="parsley.js">&lt;/script></code></pre>
+                Please, feel free to <a href="http://github.com/guillaumepotier/Parsley.js">fork and contribute</a> by adding some useful validators!
+            </p>
+            <br/>
+
+            <h5>Here is the list of parsley.extra validators</h5>
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>Api</th>
+                      <th>Description</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>Min Words</td>
+                      <td><code>data-minwords="6"</code></td>
+                      <td>Validate that a field has at least 6 words.</td>
+                  </tr>
+                  <tr>
+                    <td>Max Words</td>
+                    <td><code>data-maxwords="6"</code></td>
+                    <td>Validate that a field has 6 words maximum.</td>
+                  </tr>
+                  <tr>
+                    <td>Range Words</td>
+                    <td><code>data-rangewords="[6,10]"</code></td>
+                    <td>Validate that a field has between 6 and 10 words.</td>
+                  </tr>
+                  <tr>
+                    <td>Greater Than</td>
+                    <td><code>data-greaterthan="#elem"</code></td>
+                    <td>Validate that a field's value is greater than #elem's value.</td>
+                  </tr>
+                  <tr>
+                    <td>Less Than</td>
+                    <td><code>data-lessthan="#elem"</code></td>
+                    <td>Validate that a field's value is lower than #elem's value.</td>
+                  </tr>
+                  <tr>
+                    <td>Before date</td>
+                    <td><code>data-beforedate="#elem"</code></td>
+                    <td>Validate that a field's date is before #elem's date.</td>
+                  </tr>
+                  <tr>
+                    <td>After date</td>
+                    <td><code>data-afterdate="#elem"</code></td>
+                    <td>Validate that a field's date is after #elem's date.</td>
+                  </tr>
+                  <tr>
+                    <td>In list</td>
+                    <td><code>data-inlist="foo, bar, foo bar"</code></td>
+                    <td>
+                      Validates that a field's value is present within the value list. You can define the delimiter using <code>data-inlist-delimiter=","</code>. Delimiter defaults to <code>","</code>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Luhn</td>
+                    <td><code>data-luhn="true"</code></td>
+                    <td>
+                      Validates that a fields value passes the Luhn algorithm. Validates credit card numbers, as well as some other kinds of account numbers.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>American Date</td>
+                    <td><code>data-americandate="true"</code></td>
+                    <td>
+                      Validates that a value is a valid American Date. Allows for slash, dot and hyphen delimiters and condensed dates (e.g., M/D/YY MM.DD.YYYY MM-DD-YY).
+                    </td>
+                  </tr>
+              </tbody>
+            </table>
+
+            </section>
+            <a href="#top" class="top pull-right">Top</a>
+
+            <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <section>
+                <a name="javascript"></a>
+                <div class="page-header">
+                    <h3>Javascript</h3>
+                    <p>Parsleys DOM-API is great. But not so great for complex forms, or dynamically generated forms. Learn how to master Parsley javascript style!</p>
+                    <p class="alert alert-block">
+                      <span class="label">Warning :</span> you must remove <code>data-validate="parsley"</code> auto-binding code in your forms DOM to allow you to override the default processing and use Parsley purely from javascript.
+                    </p>
+                </div>
+                <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Returns</th>
+                        <th width="40%">Description</th>
+                        <th width="40%" class="not-for-mobile">Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <a name="javascript-general"></a>
+                        <td colspan="4"><h4>General</h4></td>
+                    </tr>
+                    <tr>
+                        <td>Override default plugin configs</td>
+                        <td></td>
+                        <td>Parsley uses a set of default configs that you can override by passing an object as a parameter when calling Parsley on a form or a field.<br/>Default is:
+<pre><code>{
+  // basic data-api overridable properties here..
+  inputs: 'input, textarea, select'
+  , excluded: 'input[type=hidden]'
+  , trigger: false
+  , focus: 'first'
+  , validationMinlength: 3
+  , successClass: 'parsley-success'
+  , errorClass: 'parsley-error'
+  , validators: {}
+  , showErrors: true
+  , messages: {}
+
+  //some quite advanced configuration here..
+  , validateIfUnchanged: false
+  , errors: {                     // specify where parsley error-success classes are set
+    classHandler: function ( elem, isRadioOrCheckbox ) {}
+  , container: function ( elem, isRadioOrCheckbox ) {}
+  , errorsWrapper: '&lt;ul>&lt;/ul>'
+  , errorElem: '&lt;li>&lt;/li>'
+  }
+  , listeners: {
+      onFieldValidate: function ( elem, ParsleyField ) { return false; }
+    , onFormSubmit: function ( isFormValid, event, ParsleyForm ) {}
+    , onFieldError: function ( elem, constraints, ParsleyField ) {}
+    , onFieldSuccess: function ( elem, constraints, ParsleyField ) {}
+  }
+}</code></pre>
+                        </td>
+                        <td  class="not-for-mobile"><p>Add a custom validator that checks if number is a multiple of another:</p>
+<pre><code>$( '#form' ).parsley( {
+    validators: {
+      multiple: function ( val, multiple ) {
+        return val % multiple === 0;
+      }
+    }
+  , messages: {
+      multiple: "This value should be a multiple of %s"
+    }
+} );
+&lt;input type="text" data-multiple="3" /></code></pre>
+                            <form id="parsley-multiple">
+                                <input type="text" id="data-multiple" data-validation-minlength="0" data-trigger="keyup" data-multiple="3" placeholder="multiple of 3" />
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Add a listener</td>
+                        <td></td>
+                        <td>Allows you, even after Parsleys initial form binding, to add a custom listener. Available listeners currently are: <code>onFieldValidate</code>, <code>onFieldError</code>, <code>onFieldSuccess</code> and <code>onFormSubmit</code>. Their passed arguments are listed above in Default Plugin config.</td>
+                        <td class="not-for-mobile">
+<pre><code>$( '#form' ).parsley( 'addListener', {
+    onFieldValidate: function ( elem ) {
+
+        // if field is not visible, do not apply Parsley validation!
+        if ( !$( elem ).is( ':visible' ) ) {
+            return true;
+        }
+
+        return false;
+    }
+} );</code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <a name="javascript-form"></a>
+                            <h4>Form</h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Bind Parsley to a form</td>
+                        <td></td>
+                        <td>Useful if your form is dynamically rendered.</td>
+                        <td class="not-for-mobile">
+<pre><code>$( '#form' ).parsley();</code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Validate a form</td>
+                        <td>Boolean</td>
+                        <td>Useful if you want to integrate the form validation process inside custom functions.</td>
+                        <td  class="not-for-mobile">
+<pre><code>$( '#form' ).parsley( 'validate' );</code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Test if form valid</td>
+                        <td>Boolean</td>
+                        <td>Useful if you want to integrate the form validation process inside custom functions, without triggering error messages.</td>
+                        <td  class="not-for-mobile">
+<pre><code>$( '#form' ).parsley( 'isValid' );</code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Destroy Parsley</td>
+                        <td></td>
+                        <td>Reset error messages, error classes, stop prevent form submission and validation triggered events.</td>
+                        <td class="not-for-mobile">
+<pre><code>$( '#form' ).parsley( 'destroy' );</code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Dynamically add an Item to Form</td>
+                        <td></td>
+                        <td>If an item is dynamically created, it won't be naturally validated with Parsley. Use this to attach it to existing Parsley validated form.</td>
+                        <td class="not-for-mobile">
+<pre><code>$( '#form' ).parsley( 'addItem', '#itemid' );</code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Dynamically remove an Item to Form</td>
+                        <td></td>
+                        <td>If an item is dynamically deleted / removed from form, it will be unfortunately still present in Parsley validation process. Use this to remove it in Parsley form validation process. <span class="label label-important">This field <strong>must</strong> have an id to be properly destroyed</span></td>
+                        <td class="not-for-mobile">
+<pre><code>$( '#form' ).parsley( 'removeItem', '#itemid' );</code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <a name="javascript-fields"></a>
+                            <h4>Field</h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Validate a field</td>
+                        <td>Boolean</td>
+                        <td>Useful if your want to integrate the field validation process inside custom functions.</td>
+                        <td  class="not-for-mobile">
+<pre><code>$( '#field' ).parsley( 'validate' );</code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Add new constraint</td>
+                        <td></td>
+                        <td>Useful if your want to add a constraint to an existing Parsley validated field.</td>
+                        <td  class="not-for-mobile">
+<pre><code>$( '#field' ).parsley( 'addConstraint', { minlength: 2 } );</code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Update constraint</td>
+                        <td></td>
+                        <td>Useful if your want to update an existing constraint for a field.</td>
+                        <td  class="not-for-mobile">
+    <pre><code>$( '#field' ).parsley( 'updateConstraint', { minlength: 6 } );</code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Remove constraint</td>
+                        <td></td>
+                        <td>Useful if your want to remove an existing constraint to an existing Parsley validated field.</td>
+                        <td  class="not-for-mobile">
+    <pre><code>$( '#field' ).parsley( 'removeConstraint', 'minlength' );</code></pre>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+              More generally, in the Parsley API: All ParsleyForm and ParsleyItem functions can be publicly called using the following syntax:
+              <pre><code>$( '#parsleyFormOrFieldId' ).parsley( 'functionName', parameter );</code></pre>
+              So help yourself, read the code and play with Parsley! ;)
+            </p>
+            </section>
+          </div>
+          <a href="#top" class="top pull-right">Top</a>
+
+          <section>
+              <a name="parsleyclasses"></a>
+              <div class="page-header">
+                  <h3>Parsley CSS</h3>
+                  <p>A good #UX goes with a good #UI. Parsley has some base classes you can use to customize things a bit ;) (and of course, rename in the configuration object)</p>
+              </div>
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">Default classes &amp; templates</td>
+                    </tr>
+                    <tr>
+                        <td><code>.parsley-validated</code></td>
+                        <td>Auto added on each form item that has Parsley validation.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.parsley-success</code></td>
+                        <td>Auto added on each form item that has successfully passed validation.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.parsley-error</code></td>
+                        <td>Auto added on each form item that did not pass Parsley validation.</td>
+                    </tr>
+                    <tr>
+                        <td><code>ul.parsley-error-list</code></td>
+                        <td>Auto added after each form item that did not pass Parsley validation. Container for errors <code>&lt;li></code>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>li.parsley-error</code></td>
+                        <td>Message displayed if constraint failed validation.</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Override them!</td>
+                    </tr>
+                    <tr>
+                        <td>Change class names</td>
+                        <td><pre><code>$('#form').parsley({ successClass: 'my-class-name', errorClass: 'still-my-class-name' });</code></pre></td>
+                    </tr>
+                    <tr>
+                        <td>Change class handler</td>
+                        <td>Add parsley-success and parsley-error to direct parent:
+<pre><code>$('#form').parsley( {
+    errors: {
+        classHandler: function ( elem, isRadioOrCheckbox ) {
+            return $( elem ).parent();
+        }
+    }
+} );</code></pre></td>
+                    </tr>
+                    <tr>
+                      <td>Change error container</td>
+                      <td><p>Override the container that the <code>errorWrapper</code> (ie. by default the <code>&lt;ul&gt;&lt;/ul&gt;</code> containing the errors) is inserted into.</p>
+                      <p>By default this function does not return anything and so the <code>errorWrapper</code> is added to the DOM directly after the element containing the error, however if you override this function in your options you can return an alternative container where the <code>errorWrapper</code> will be appended</p>
+                      <p>For example, to have the error messages appear before the field with the error in a <code>div</code> with the class <code>.parsley-container</code>:<pre><code>errors: {
+    container: function (element, isRadioOrCheckbox) {
+        var $container = element.parent().find(".parsley-container");
+        if ($container.length === 0) {
+            $container = $("&lt;div class='parsley-container'&gt;&lt;/div&gt;").insertBefore(element);
+        }
+        return $container;
+    }
+}</code></pre></p></td></tr>
+                    <tr>
+                        <td>Advanced changes</td>
+                        <td>See <code>errorsWrapper</code>, <code>errorElem</code> errors properties in Parsley default options.</td>
+                    </tr>
+                </tbody>
+              </table>
+          </section>
+          <a href="#top" class="top pull-right">Top</a>
+
+
+          <section>
+                <a name="plugins-and-localization"></a>
+                <div class="page-header">
+                    <h3>Parsley Plugins &amp; Localization</h3>
+                    <p>Parsley is shipped with localization (i18n) for its failure messages, and with extra, advanced validators, not included in parsley by default. Learn how to use them here.</p>
+                </div>
+                <h4>Localizations</h4>
+                <p>
+                    <a href="https://github.com/guillaumepotier/Parsley.js/tree/master/i18n">Here are Parsleys error messages in various supported languages</a>. To use one of these, just call the desired language file. Eg: for French messages:
+<pre><code>&lt;script type="text/javascript" src="/i18n/messages.fr.js">&lt;/script>
+&lt;script type="text/javascript" src="parsley.js">&lt;/script></code></pre>
+                    Please, feel free to <a href="http://github.com/guillaumepotier/Parsley.js">fork and contribute</a> by adding your own translations messages in your language!
+                </p>
+                <br/>
+            </section>
+            <section>
+                <a name="integrations"></a>
+                <div class="page-header">
+                    <h3>Integration with other frameworks</h3>
+                    <p>There is a growing community of tools integrating Parsley with other frameworks. If you create such a tool, please submit a pull request.</p>
+                </div>
+                <ul>
+                  <li><a href="https://github.com/agiliq/django-parsley">Django</a></li>
+                  <li><a href="https://github.com/mekishizufu/parsley-rails">Rails</a></li>
+                  <li><a href="https://github.com/code-troopers/wicket-jsr303-parsley">Wicket</a></li>
+                  <li><a href="https://github.com/johannes-gehrs/wtforms-parsleyjs">WTForms</a></li>
+                </ul>
+            </section>
+            <a href="#top" class="top pull-right">Top</a>
+      <hr>
+
+      <div class="footer">
+        <p>&copy; <a href="http://twitter.com/guillaumepotier">@guillaumepotier</a> @<a href="http://wisembly.com/en/">Wisembly</a> 2012 - <small><a href="http://garlicjs.org">Ever heard of #Garlic.js, Parsley little sister?</a></small>
+        </p>
+      </div>
+
+    </div> <!-- /container -->
+    <script type="text/javascript" src="components/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="parsley.js"></script>
+    <script type="text/javascript" src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+    <script type="text/javascript">
+        try {
+            hljs.initHighlightingOnLoad();
+        } catch ( err ) {}
+
+        $( '#demo-form' ).parsley( { listeners: {
+            onFormSubmit: function ( isFormValid, event ) {
+                if ( isFormValid && !$( '#good-to-go').length ) {
+                    $( '#demo-form-valid' ).after( '<span id="good-to-go" style="display:block;margin-top:5px;" class="alert alert-success">Yay, good to go!</span>' );
+                    $( '#demo-form-valid' ).hide();
+                    $( '#not-good-to-go' ).hide();
+                } else if ( !isFormValid && !$( '#not-good-to-go').length ) {
+                    $( '#demo-form-valid' ).after( '<span id="not-good-to-go" style="display:block;margin-top:5px;" class="alert alert-error">Oops! Seems there are some errors..</span>' );
+                }
+            },
+            onFieldError: function ( field, constraint ) {
+                $( '#demo-form-valid' ).show();
+                $( '#good-to-go' ).remove();
+            }
+        } } );
+
+        $( '#parsley-multiple' ).parsley( {
+          validators: {
+            multiple: function ( val, multiple ) {
+              return val % multiple === 0;
+            }
+          }
+          , messages: {
+              multiple: "This value should be a multiple of %s"
+            }
+        } );
+    </script>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-37229467-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+    <script>
+        (function(d, t) {
+            var g = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            g.src = '//hnbutton.appspot.com/static/hn.min.js';
+            s.parentNode.insertBefore(g, s);
+        }(document, 'script'));
+    </script>
+  </body>
+</html>
