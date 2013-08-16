@@ -8,3 +8,4 @@ build/
 _build/
 *.pyc
 data.db
+example/example/settings/local.py
