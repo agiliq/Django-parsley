@@ -7,5 +7,5 @@ htmlcov/
 build/
 _build/
 *.pyc
-data.db
+test.db
 example/example/settings/local.py
