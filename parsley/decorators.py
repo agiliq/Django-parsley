@@ -30,6 +30,15 @@ def parsleyfy(klass):
                 field.widget.attrs.update({'data-min': field.min_value})
             if hasattr(field, 'max_value') and field.max_value:
                 field.widget.attrs.update({'data-max': field.max_value})
+        extras = getattr(getattr(self, 'Meta', None), 'parsley_extras', {})
+        for field_name, data in extras.items():
+            for key, value in data.items():
+                attrs = self.fields[field_name].widget.attrs
+                if key == 'equalto':
+                    # Use HTML id for data-equalto
+                    attrs['data-equalto'] = self[value].id_for_label
+                else:
+                    attrs['data-%s' % key] = value
     klass.__init__ = new_init
 
     return klass
