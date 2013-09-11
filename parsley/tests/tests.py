@@ -149,7 +149,7 @@ class TestExtraAttributes(TestCase):
             "data-type": "email",
             "data-required": "true",
             "data-equalto-message": "Must match",
-            "data-equalto": "id_email",
+            "data-equalto": "#id_email",
         })
 
     def test_default_data(self):
