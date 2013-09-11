@@ -64,6 +64,25 @@ Put this form inside a
 
 Include the parsleyjs and you are good to go.
 
+### Advanced Usage
+
+In addition to the default validators if you want to add extra client side validations
+or if you want to add custom validators, add a `parsley_extras` Meta attribute. For e.g
+if you wanted to add `minlength` and `equalto` validations on a `PasswordChangeForm`:
+
+    @parsleyfy
+    class PasswordChangeForm(BasePasswordChangeForm):
+        class Meta:
+            parsley_extras = {
+                'new_password1': {
+                    'minlength': "5",
+                },
+                'new_password2': {
+                    'equalto': "new_password1",
+                    'error-message': "Your passwords do not match.",
+                },
+            }
+
 ###License
 
 3 Clause BSD.
