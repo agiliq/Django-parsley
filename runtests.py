@@ -19,6 +19,7 @@ if not settings.configured and not os.environ.get('DJANGO_SETTINGS_MODULE'):
         INSTALLED_APPS=[
             'parsley',
         ],
+        STATIC_URL = "/static/",
     )
 
 from django.test.simple import DjangoTestSuiteRunner
