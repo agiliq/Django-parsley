@@ -1,9 +1,10 @@
 from parsley.decorators import parsleyfy
 
-class ParsleyMixin(object):
+
+class ParsleyAdminMixin(object):
 
     def get_form(self, *args, **kwargs):
-        form = super(ParsleyMixin, self).get_form(*args, **kwargs)
+        form = super(ParsleyAdminMixin, self).get_form(*args, **kwargs)
         return parsleyfy(form)
 
     class Media:

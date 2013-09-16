@@ -3,10 +3,10 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
-from parsley.admin import ParsleyMixin
+from parsley.mixins import ParsleyAdminMixin
 
 
-class MyUserAdmin(ParsleyMixin, UserAdmin):
+class MyUserAdmin(ParsleyAdminMixin, UserAdmin):
     pass
 
 
