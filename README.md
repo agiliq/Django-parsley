@@ -17,7 +17,7 @@ Parsley plays well with `crispy-forms` et all.
 ### Installation
 
 1. pip install `parsley` (or add to your requirements.txt)
-2. Because we do not add any models, add `parsley` to your `INSTALLED_APPS` is not necessary.
+2. add `parsley` to your `INSTALLED_APPS` (required for static files added by mixin)
 
 ### Usage
 
@@ -63,6 +63,16 @@ Put this form inside a
     </form>
 
 Include the parsleyjs and you are good to go.
+
+
+### Admin
+
+To add parsley validations to admin, use the `ParsleyAdminMixin` with your `ModelAdmin` like so:
+
+    class StudentAdmin(ParsleyAdminMixin, admin.ModelAdmin):
+        pass
+
+Note that the above mixin adds two scripts: `parsley-standalone.min.js` and `parsley.django-admin.js` to the admin media.
 
 ### Advanced Usage
 

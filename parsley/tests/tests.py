@@ -1,11 +1,14 @@
-from django.test import TestCase
 from django import forms
+from django.contrib import admin
+from django.test import TestCase
 
 from parsley.decorators import parsleyfy
 
 from .forms import (TextForm, TextForm2, FieldTypeForm, ExtraDataForm,
         FormWithWidgets, StudentModelForm, FormWithCleanField,
         FormWithCustomInit, FormWithCustomChoices)
+from .models import Student
+from .admin import StudentAdmin
 
 
 class CharFieldTest(TestCase):
@@ -159,3 +162,17 @@ class TestExtraAttributes(TestCase):
             "data-required": "true",
             "data-error-message": "Name invalid",
         })
+
+
+class TestAdminMixin(TestCase):
+    def test_media(self):
+        student_admin = StudentAdmin(Student, admin.site)
+        js = student_admin.media.render_js()
+        self.assertIn(
+            '<script type="text/javascript" src="/static/parsley/js/parsley-standalone.min.js"></script>',
+            js
+        )
+        self.assertIn(
+            '<script type="text/javascript" src="/static/parsley/js/parsley.django-admin.js"></script>',
+            js
+        )
