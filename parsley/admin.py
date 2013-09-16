@@ -7,4 +7,7 @@ class ParsleyMixin(object):
         return parsleyfy(form)
 
     class Media:
-        js = ("parsley/js/parsley-standalone.min.js",)
+        js = (
+            "parsley/js/parsley-standalone.min.js",
+            "parsley/js/parsley.django-admin.js",
+        )
