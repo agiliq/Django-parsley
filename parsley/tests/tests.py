@@ -169,10 +169,10 @@ class TestAdminMixin(TestCase):
         student_admin = StudentAdmin(Student, admin.site)
         js = student_admin.media.render_js()
         self.assertIn(
-            u'<script type="text/javascript" src="/static/parsley/js/parsley-standalone.min.js"></script>',
+            '<script type="text/javascript" src="/static/parsley/js/parsley-standalone.min.js"></script>',
             js
         )
         self.assertIn(
-            u'<script type="text/javascript" src="/static/parsley/js/parsley.django-admin.js"></script>',
+            '<script type="text/javascript" src="/static/parsley/js/parsley.django-admin.js"></script>',
             js
         )
