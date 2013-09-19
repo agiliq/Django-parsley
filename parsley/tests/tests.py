@@ -6,7 +6,7 @@ from parsley.decorators import parsleyfy
 
 from .forms import (TextForm, TextForm2, FieldTypeForm, ExtraDataForm,
         FormWithWidgets, StudentModelForm, FormWithCleanField,
-        FormWithCustomInit, FormWithCustomChoices)
+        FormWithCustomInit, FormWithCustomChoices, FormWithMedia, FormWithoutMedia)
 from .models import Student
 from .admin import StudentAdmin
 
@@ -174,5 +174,28 @@ class TestAdminMixin(TestCase):
         )
         self.assertIn(
             '<script type="text/javascript" src="/static/parsley/js/parsley.django-admin.js"></script>',
+            js
+        )
+
+
+class TestFormMedia(TestCase):
+
+    def test_form_media(self):
+        form = FormWithoutMedia()
+        js = form.media.render_js()
+        self.assertIn(
+            '<script type="text/javascript" src="/static/parsley/js/parsley-standalone.min.js"></script>',
+            js
+        )
+
+    def test_existing_form_media(self):
+        form = FormWithMedia()
+        js = form.media.render_js()
+        self.assertIn(
+            '<script type="text/javascript" src="/static/jquery.min.js"></script>',
+            js
+        )
+        self.assertIn(
+            '<script type="text/javascript" src="/static/parsley/js/parsley-standalone.min.js"></script>',
             js
         )
