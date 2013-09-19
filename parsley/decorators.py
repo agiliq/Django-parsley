@@ -41,4 +41,13 @@ def parsleyfy(klass):
                     attrs['data-%s' % key] = value
     klass.__init__ = new_init
 
+    try:
+        klass.Media.js += ("parsley/js/parsley-standalone.min.js",)
+    except AttributeError:
+        class Media:
+            js = (
+                "parsley/js/parsley-standalone.min.js",
+            )
+        klass.Media = Media
+
     return klass

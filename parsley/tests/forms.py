@@ -93,3 +93,17 @@ class FormWithCustomChoices(forms.Form):
         super(FormWithCustomChoices, self).__init__(*args, **kwargs)
         self.fields['state'] = forms.ChoiceField(
             choices=get_state_choices())
+
+
+@parsleyfy
+class FormWithMedia(forms.Form):
+    name = forms.CharField(required=True)
+
+    class Media:
+        js = ("jquery.min.js",)
+        css = {"all": ("jquery.css",)}
+
+
+@parsleyfy
+class FormWithoutMedia(forms.Form):
+    name = forms.CharField(required=True)
