@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 
 
@@ -21,7 +23,10 @@ def parsleyfy(klass):
             if isinstance(field, forms.FloatField):
                 field.widget.attrs.update({"data-type": "number"})
             if isinstance(field, forms.RegexField):
-                field.widget.attrs.update({"data-regexp": field.regex.pattern})
+                pattern = field.regex.pattern
+                field.widget.attrs.update({"data-regexp": pattern})
+                if pattern.flags & re.IGNORECASE:
+                    field.widget.attrs.update({"data-regexp-flag": "i"})
             if hasattr(field, "max_length") and field.max_length:
                 field.widget.attrs.update({"data-maxlength": field.max_length})
             if hasattr(field, "min_length") and field.min_length:
