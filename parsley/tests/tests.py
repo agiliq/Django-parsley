@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 from django.contrib import admin
 from django.test import TestCase
@@ -58,6 +60,9 @@ class DataTypeTest(TestCase):
         self.assertEqual(fields["income"].widget.attrs["data-type"], "number")
         self.assertEqual(fields["income2"].widget.attrs["data-type"], "number")
         self.assertEqual(fields["topnav"].widget.attrs["data-regexp"], "#[A-Fa-f0-9]{6}")
+        self.assertNotIn("data-regexp-flag", fields["topnav"].widget.attrs)
+        self.assertEqual(fields["topnav2"].widget.attrs["data-regexp"], "#[a-z]+")
+        self.assertEqual(fields["topnav2"].widget.attrs["data-regexp-flag"], "i")
 
 
 class LengthTest(TestCase):

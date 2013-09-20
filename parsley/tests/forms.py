@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 from parsley.decorators import parsleyfy
 from .models import Student
@@ -26,6 +28,7 @@ class FieldTypeForm(forms.Form):
     income = forms.DecimalField()
     income2 = forms.FloatField()
     topnav = forms.RegexField(regex="#[A-Fa-f0-9]{6}")
+    topnav2 = forms.RegexField(regex=re.compile("#[a-z]+", re.IGNORECASE))
     some_num = forms.IntegerField(min_value=10, max_value=100)
 
 
