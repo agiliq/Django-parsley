@@ -3,20 +3,27 @@ import re
 from django import forms
 
 
+FIELD_TYPES = [
+    (forms.URLField, "url"),
+    (forms.EmailField, "email"),
+    (forms.IntegerField, "digits"),
+    (forms.DecimalField, "number"),
+    (forms.FloatField, "number"),
+]
+
+
+FIELD_ATTRS = [
+    ("min_length", "minlength"),
+    ("max_length", "maxlength"),
+    ("min_value", "min"),
+    ("max_value", "max"),
+]
+
+
 def update_widget_attrs(field):
     attrs = field.widget.attrs
     if field.required:
         attrs["data-required"] = "true"
-    if isinstance(field, forms.URLField):
-        attrs["data-type"] = "url"
-    if isinstance(field, forms.EmailField):
-        attrs["data-type"] = "email"
-    if isinstance(field, forms.IntegerField):
-        attrs["data-type"] = "digits"
-    if isinstance(field, forms.DecimalField):
-        attrs["data-type"] = "number"
-    if isinstance(field, forms.FloatField):
-        attrs["data-type"] = "number"
     if isinstance(field, forms.RegexField):
         attrs.update({"data-regexp": field.regex.pattern})
         if field.regex.flags & re.IGNORECASE:
@@ -24,14 +31,14 @@ def update_widget_attrs(field):
     if isinstance(field, forms.MultiValueField):
         for subfield in field.fields:
             update_widget_attrs(subfield)
-    if hasattr(field, "max_length") and field.max_length:
-        attrs["data-maxlength"] = field.max_length
-    if hasattr(field, "min_length") and field.min_length:
-        attrs["data-minlength"] = field.min_length
-    if hasattr(field, 'min_value') and field.min_value:
-        attrs['data-min'] = field.min_value
-    if hasattr(field, 'max_value') and field.max_value:
-        attrs['data-max'] = field.max_value
+    # Set data-* attributes for parsley based on Django field attributes
+    for attr, data_attr, in FIELD_ATTRS:
+        if getattr(field, attr, None):
+            attrs["data-{0}".format(data_attr)] = getattr(field, attr)
+    # Set data-type attribute based on Django field instance type
+    for klass, field_type in FIELD_TYPES:
+        if isinstance(field, klass):
+            attrs["data-type"] = field_type
 
 
 def parsleyfy(klass):
