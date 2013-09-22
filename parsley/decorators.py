@@ -4,33 +4,34 @@ from django import forms
 
 
 def update_widget_attrs(field):
+    attrs = field.widget.attrs
     if field.required:
-        field.widget.attrs.update({"data-required": "true"})
+        attrs["data-required"] = "true"
     if isinstance(field, forms.URLField):
-        field.widget.attrs.update({"data-type": "url"})
+        attrs["data-type"] = "url"
     if isinstance(field, forms.EmailField):
-        field.widget.attrs.update({"data-type": "email"})
+        attrs["data-type"] = "email"
     if isinstance(field, forms.IntegerField):
-        field.widget.attrs.update({"data-type": "digits"})
+        attrs["data-type"] = "digits"
     if isinstance(field, forms.DecimalField):
-        field.widget.attrs.update({"data-type": "number"})
+        attrs["data-type"] = "number"
     if isinstance(field, forms.FloatField):
-        field.widget.attrs.update({"data-type": "number"})
+        attrs["data-type"] = "number"
     if isinstance(field, forms.RegexField):
-        field.widget.attrs.update({"data-regexp": field.regex.pattern})
+        attrs.update({"data-regexp": field.regex.pattern})
         if field.regex.flags & re.IGNORECASE:
-            field.widget.attrs.update({"data-regexp-flag": "i"})
+            attrs.update({"data-regexp-flag": "i"})
     if isinstance(field, forms.MultiValueField):
         for subfield in field.fields:
             update_widget_attrs(subfield)
     if hasattr(field, "max_length") and field.max_length:
-        field.widget.attrs.update({"data-maxlength": field.max_length})
+        attrs["data-maxlength"] = field.max_length
     if hasattr(field, "min_length") and field.min_length:
-        field.widget.attrs.update({"data-minlength": field.min_length})
+        attrs["data-minlength"] = field.min_length
     if hasattr(field, 'min_value') and field.min_value:
-        field.widget.attrs.update({'data-min': field.min_value})
+        attrs['data-min'] = field.min_value
     if hasattr(field, 'max_value') and field.max_value:
-        field.widget.attrs.update({'data-max': field.max_value})
+        attrs['data-max'] = field.max_value
 
 
 def parsleyfy(klass):
