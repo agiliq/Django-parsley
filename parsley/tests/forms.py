@@ -110,3 +110,32 @@ class FormWithMedia(forms.Form):
 @parsleyfy
 class FormWithoutMedia(forms.Form):
     name = forms.CharField(required=True)
+
+
+class SSNWidget(forms.MultiWidget):
+    def __init__(self, *args, **kwargs):
+        kwargs['widgets'] = [
+            forms.TextInput(),
+            forms.TextInput(),
+            forms.TextInput(),
+            ]
+        super(SSNWidget, self).__init__(*args, **kwargs)
+
+    def decompress(self, value):
+        return value.split('-') if value else [None, None, None]
+
+
+class SSN(forms.MultiValueField):
+    widget = SSNWidget
+    def __init__(self, *args, **kwargs):
+        fields = (
+            forms.RegexField(r'^(\d)+$', min_length=3, max_length=3),
+            forms.RegexField(r'^(\d)+$', min_length=3, max_length=3),
+            forms.RegexField(r'^(\d)+$', min_length=4, max_length=4),
+        )
+        super(SSN, self).__init__(fields=fields, *args, **kwargs)
+
+
+@parsleyfy
+class MultiWidgetForm(forms.Form):
+    ssn = SSN()
