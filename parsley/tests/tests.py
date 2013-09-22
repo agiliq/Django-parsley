@@ -9,7 +9,7 @@ from parsley.decorators import parsleyfy
 from .forms import (TextForm, TextForm2, FieldTypeForm, ExtraDataForm,
         ExtraDataMissingFieldForm, FormWithWidgets, StudentModelForm,
         FormWithCleanField, FormWithCustomInit, FormWithCustomChoices,
-        FormWithMedia, FormWithoutMedia)
+        FormWithMedia, FormWithoutMedia, MultiWidgetForm)
 from .models import Student
 from .admin import StudentAdmin
 
@@ -208,3 +208,27 @@ class TestFormMedia(TestCase):
             '<script type="text/javascript" src="/static/parsley/js/parsley-standalone.min.js"></script>',
             js
         )
+
+
+class TestMultiValueField(TestCase):
+    def test_parsley_attributes(self):
+        form = MultiWidgetForm()
+        fields = form.fields["ssn"].fields
+        self.assertEqual(fields[0].widget.attrs, {
+            "data-minlength": 3,
+            "data-maxlength": 3,
+            "maxlength": "3",
+            "data-regexp": r'^(\d)+$',
+        })
+        self.assertEqual(fields[1].widget.attrs, {
+            "data-minlength": 3,
+            "data-maxlength": 3,
+            "maxlength": "3",
+            "data-regexp": r'^(\d)+$',
+        })
+        self.assertEqual(fields[2].widget.attrs, {
+            "data-minlength": 4,
+            "data-maxlength": 4,
+            "maxlength": "4",
+            "data-regexp": r'^(\d)+$',
+        })
