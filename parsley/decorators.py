@@ -20,6 +20,9 @@ def update_widget_attrs(field):
         field.widget.attrs.update({"data-regexp": field.regex.pattern})
         if field.regex.flags & re.IGNORECASE:
             field.widget.attrs.update({"data-regexp-flag": "i"})
+    if isinstance(field, forms.MultiValueField):
+        for subfield in field.fields:
+            update_widget_attrs(subfield)
     if hasattr(field, "max_length") and field.max_length:
         field.widget.attrs.update({"data-maxlength": field.max_length})
     if hasattr(field, "min_length") and field.min_length:
