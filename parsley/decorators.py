@@ -37,6 +37,8 @@ def parsleyfy(klass):
         extras = getattr(getattr(self, 'Meta', None), 'parsley_extras', {})
         for field_name, data in extras.items():
             for key, value in data.items():
+                if field_name not in self.fields:
+                    continue
                 attrs = self.fields[field_name].widget.attrs
                 if key == 'equalto':
                     # Use HTML id for data-equalto

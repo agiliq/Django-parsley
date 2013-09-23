@@ -50,6 +50,12 @@ class ExtraDataForm(forms.Form):
         }
 
 
+class ExtraDataMissingFieldForm(ExtraDataForm):
+    def __init__(self, *args, **kwargs):
+        del self.base_fields['email2']
+        super(ExtraDataMissingFieldForm, self).__init__(*args, **kwargs)
+
+
 @parsleyfy
 class FormWithWidgets(forms.Form):
     description = forms.CharField(widget=forms.TextInput)
