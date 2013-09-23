@@ -7,8 +7,9 @@ from django.test import TestCase
 from parsley.decorators import parsleyfy
 
 from .forms import (TextForm, TextForm2, FieldTypeForm, ExtraDataForm,
-        FormWithWidgets, StudentModelForm, FormWithCleanField,
-        FormWithCustomInit, FormWithCustomChoices, FormWithMedia, FormWithoutMedia)
+        ExtraDataMissingFieldForm, FormWithWidgets, StudentModelForm,
+        FormWithCleanField, FormWithCustomInit, FormWithCustomChoices,
+        FormWithMedia, FormWithoutMedia)
 from .models import Student
 from .admin import StudentAdmin
 
@@ -167,6 +168,9 @@ class TestExtraAttributes(TestCase):
             "data-required": "true",
             "data-error-message": "Name invalid",
         })
+
+    def test_missing_field(self):
+        ExtraDataMissingFieldForm()  # No error should be raised
 
 
 class TestAdminMixin(TestCase):
