@@ -37,6 +37,7 @@ class ExtraDataForm(forms.Form):
     name = forms.CharField()
     email = forms.EmailField()
     email2 = forms.EmailField()
+    hide_errors = forms.CharField()
 
     class Meta:
         parsley_extras = {
@@ -46,7 +47,10 @@ class ExtraDataForm(forms.Form):
             "email2": {
                 "equalto": "email",
                 "equalto-message": "Must match",
-            }
+            },
+            "hide_errors": {
+                "show-errors": False,
+            },
         }
 
 
