@@ -169,6 +169,14 @@ class TestExtraAttributes(TestCase):
             "data-error-message": "Name invalid",
         })
 
+    def test_boolean_values(self):
+        form = ExtraDataForm()
+        attrs = form.fields["hide_errors"].widget.attrs
+        self.assertEqual(attrs, {
+            "data-required": "true",
+            "data-show-errors": "false",
+        })
+
     def test_missing_field(self):
         ExtraDataMissingFieldForm()  # No error should be raised
 
