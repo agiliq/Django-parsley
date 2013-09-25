@@ -58,6 +58,7 @@ def parsleyfy(klass):
                 if key == 'equalto':
                     # Use HTML id for data-equalto
                     value = '#' + self[value].id_for_label
+                if isinstance(value, bool):
                     value = "true" if value else "false"
                 attrs['data-%s' % key] = value
     klass.__init__ = new_init
