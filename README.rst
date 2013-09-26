@@ -23,7 +23,7 @@ Parsley plays well with ``crispy-forms`` et all.
 Installation
 ------------
 
-1. pip install ``parsley`` (or add to your requirements.txt)
+1. pip install ``django-parsley`` (or add to your requirements.txt)
 2. add ``parsley`` to your ``INSTALLED_APPS`` (required for static files added by mixin)
 
 Usage
