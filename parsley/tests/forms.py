@@ -149,3 +149,10 @@ class SSN(forms.MultiValueField):
 @parsleyfy
 class MultiWidgetForm(forms.Form):
     ssn = SSN()
+
+
+@parsleyfy
+class CustomErrorMessageForm(forms.Form):
+    name = forms.CharField(error_messages={"max_length": "Please only 30 characters"}, max_length=30, required=False)
+    email = forms.EmailField(error_messages={"invalid": "Invalid email"}, required=False)
+    favorite_color = forms.CharField(error_messages={"required": "Favorite color is required"})

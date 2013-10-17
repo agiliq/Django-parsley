@@ -1,5 +1,6 @@
 import re
 
+from django.utils.translation import ugettext as _
 from django import forms
 from django.contrib import admin
 from django.test import TestCase
@@ -9,7 +10,7 @@ from parsley.decorators import parsleyfy
 from .forms import (TextForm, TextForm2, FieldTypeForm, ExtraDataForm,
         ExtraDataMissingFieldForm, FormWithWidgets, StudentModelForm,
         FormWithCleanField, FormWithCustomInit, FormWithCustomChoices,
-        FormWithMedia, FormWithoutMedia, MultiWidgetForm)
+        FormWithMedia, FormWithoutMedia, MultiWidgetForm, CustomErrorMessageForm)
 from .models import Student
 from .admin import StudentAdmin
 
@@ -25,7 +26,8 @@ class CharFieldTest(TestCase):
         self.assertEqual(form.fields["university"].widget.attrs, {})
         ParsleyForm = parsleyfy(TextForm)
         form = ParsleyForm()
-        self.assertEqual(form.fields["name"].widget.attrs, {"data-required": "true"})
+        error = _("This field is required.")
+        self.assertEqual(form.fields["name"].widget.attrs, {"data-required": "true", "data-required-message": error})
         self.assertEqual(form.fields["university"].widget.attrs, {})
 
 
@@ -33,7 +35,8 @@ class CharFieldDecoratedTest(TestCase):
     def test_decorated(self):
         "Tests that parsleyfy works as a class Decorator"
         form = TextForm2()
-        self.assertEqual(form.fields["name"].widget.attrs, {"data-required": "true"})
+        error = _("This field is required.")
+        self.assertEqual(form.fields["name"].widget.attrs, {"data-required": "true", "data-required-message": error})
         self.assertEqual(form.fields["university"].widget.attrs, {})
 
 
@@ -159,6 +162,8 @@ class TestExtraAttributes(TestCase):
             "data-required": "true",
             "data-equalto-message": "Must match",
             "data-equalto": "#id_email",
+            "data-required-message": _('This field is required.'),
+            "data-type-email-message": _('Enter a valid email address.')
         })
 
     def test_default_data(self):
@@ -167,14 +172,17 @@ class TestExtraAttributes(TestCase):
         self.assertEqual(attrs, {
             "data-required": "true",
             "data-error-message": "Name invalid",
+            "data-required-message": _("This field is required.")
         })
 
     def test_boolean_values(self):
         form = ExtraDataForm()
         attrs = form.fields["hide_errors"].widget.attrs
+
         self.assertEqual(attrs, {
             "data-required": "true",
             "data-show-errors": "false",
+            "data-required-message": _("This field is required."),
         })
 
     def test_missing_field(self):
@@ -227,16 +235,47 @@ class TestMultiValueField(TestCase):
             "data-maxlength": 3,
             "maxlength": "3",
             "data-regexp": r'^(\d)+$',
+            "data-regexp-message": _("Enter a valid value.")
         })
         self.assertEqual(fields[1].widget.attrs, {
             "data-minlength": 3,
             "data-maxlength": 3,
             "maxlength": "3",
             "data-regexp": r'^(\d)+$',
+            "data-regexp-message": _("Enter a valid value.")
         })
         self.assertEqual(fields[2].widget.attrs, {
             "data-minlength": 4,
             "data-maxlength": 4,
             "maxlength": "4",
             "data-regexp": r'^(\d)+$',
+            "data-regexp-message": _("Enter a valid value.")
+        })
+
+
+class TestCustomErrorMessages(TestCase):
+
+    def test_new_message(self):
+        form = CustomErrorMessageForm()
+        attrs = form.fields['name'].widget.attrs
+        self.assertEqual(attrs, {
+            "maxlength": '30',
+            "data-maxlength": 30,
+            "data-maxlength-message": "Please only 30 characters"
+        })
+
+    def test_field_type_message(self):
+        form = CustomErrorMessageForm()
+        attrs = form.fields['email'].widget.attrs
+        self.assertEqual(attrs, {
+            "data-type": "email",
+            "data-type-email-message": "Invalid email"
+        })
+
+    def test_override_default_message(self):
+        form = CustomErrorMessageForm()
+        attrs = form.fields['favorite_color'].widget.attrs
+        self.assertEqual(attrs, {
+            "data-required": "true",
+            "data-required-message": "Favorite color is required"
         })

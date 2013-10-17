@@ -24,21 +24,41 @@ def update_widget_attrs(field):
     attrs = field.widget.attrs
     if field.required:
         attrs["data-required"] = "true"
+
+        error_message = field.error_messages.get('required', None)
+        if error_message:
+            attrs["data-required-message"] = error_message
+
     if isinstance(field, forms.RegexField):
         attrs.update({"data-regexp": field.regex.pattern})
+
+        error_message = field.error_messages.get('invalid', None)
+        if error_message:
+            attrs["data-regexp-message"] = error_message
+
         if field.regex.flags & re.IGNORECASE:
             attrs.update({"data-regexp-flag": "i"})
     if isinstance(field, forms.MultiValueField):
         for subfield in field.fields:
             update_widget_attrs(subfield)
+
     # Set data-* attributes for parsley based on Django field attributes
     for attr, data_attr, in FIELD_ATTRS:
         if getattr(field, attr, None):
             attrs["data-{0}".format(data_attr)] = getattr(field, attr)
+
+            error_message = field.error_messages.get(attr, None)
+            if error_message:
+                attrs["data-{0}-message".format(data_attr)] = error_message
+
     # Set data-type attribute based on Django field instance type
     for klass, field_type in FIELD_TYPES:
         if isinstance(field, klass):
             attrs["data-type"] = field_type
+
+            error_message = field.error_messages.get('invalid', None)
+            if error_message:
+                attrs["data-type-{0}-message".format(field_type)] = error_message
 
 
 def parsleyfy(klass):
