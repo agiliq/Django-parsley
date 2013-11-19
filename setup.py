@@ -111,7 +111,7 @@ setup(
     license="BSD",
     url="http://github.com/agiliq/django-parsley",
     packages=find_packages(),
-    package_data=find_package_data("parsley"),
+    package_data=find_package_data("parsley", only_in_packages=False),
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
