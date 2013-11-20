@@ -1,13 +1,21 @@
 django-parsley
 ==============
 
+.. image:: https://pypip.in/d/django-parsley/badge.png
+    :target: https://crate.io/packages/django-parsley
+    :alt: Downloads
+
+.. image:: https://pypip.in/v/django-parsley/badge.png
+    :target: https://crate.io/packages/django-parsley
+    :alt: Latest Release
+
 .. image:: https://travis-ci.org/agiliq/Django-parsley.png?branch=master
-   :target: https://travis-ci.org/agiliq/Django-parsley
-   :alt: Build Status
+    :target: https://travis-ci.org/agiliq/Django-parsley
+    :alt: Build Status
 
 .. image:: https://coveralls.io/repos/agiliq/Django-parsley/badge.png?branch=master
-   :target: https://coveralls.io/r/agiliq/Django-parsley
-   :alt: Coverage Status
+    :target: https://coveralls.io/r/agiliq/Django-parsley
+    :alt: Coverage Status
 
 What is it?
 -----------
