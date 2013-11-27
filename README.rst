@@ -123,6 +123,14 @@ if you wanted to add ``minlength`` and ``equalto`` validations on a ``PasswordCh
                 },
             }
 
+To use a custom namespace for parsley (e.g when using parsley with the ``data-parsley-namespace``
+option) you can provide a namespace by using the ``parsley_namespace`` Meta attribute.
+
+.. code-block:: python
+
+    class Meta:
+        parsley_namespace = 'custom'
+
 License
 -------
 
