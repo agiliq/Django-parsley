@@ -163,4 +163,4 @@ class CustomPrefixForm(forms.Form):
     name = forms.CharField(required=True)
 
     class Meta:
-        prefix = 'parsley'
+        prefix = 'custom'
