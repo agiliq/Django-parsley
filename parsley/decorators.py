@@ -20,10 +20,10 @@ FIELD_ATTRS = [
 ]
 
 
-def update_widget_attrs(field):
+def update_widget_attrs(field, prefix='data'):
     attrs = field.widget.attrs
     if field.required:
-        attrs["data-required"] = "true"
+        attrs["{prefix}-required".format(prefix=prefix)] = "true"
 
         error_message = field.error_messages.get('required', None)
         if error_message:
@@ -67,8 +67,9 @@ def parsleyfy(klass):
 
     def new_init(self, *args, **kwargs):
         old_init(self, *args, **kwargs)
+        prefix = getattr(getattr(self, 'Meta', None), 'prefix', 'data')
         for _, field in self.fields.items():
-            update_widget_attrs(field)
+            update_widget_attrs(field, prefix)
         extras = getattr(getattr(self, 'Meta', None), 'parsley_extras', {})
         for field_name, data in extras.items():
             for key, value in data.items():

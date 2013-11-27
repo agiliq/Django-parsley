@@ -11,7 +11,8 @@ from parsley.decorators import parsleyfy
 from .forms import (TextForm, TextForm2, FieldTypeForm, ExtraDataForm,
         ExtraDataMissingFieldForm, FormWithWidgets, StudentModelForm,
         FormWithCleanField, FormWithCustomInit, FormWithCustomChoices,
-        FormWithMedia, FormWithoutMedia, MultiWidgetForm, CustomErrorMessageForm)
+        FormWithMedia, FormWithoutMedia, MultiWidgetForm, CustomErrorMessageForm,
+        CustomPrefixForm)
 from .models import Student
 from .admin import StudentAdmin
 
@@ -291,3 +292,15 @@ class TestCustomErrorMessages(TestCase):
             "data-required": "true",
             "data-required-message": "Favorite color is required"
         })
+
+class TestCustomPrefix(TestCase):
+
+    def test_default_prefix(self):
+        form = TextForm()
+        attrs = form.fields['name'].widget.attrs
+        self.assertTrue('data-required' in attrs)
+
+    def test_custom_prefix(self):
+        form = CustomPrefixForm()
+        attrs = form.fields['name'].widget.attrs
+        self.assertTrue('parsley-required' in attrs)
