@@ -67,7 +67,7 @@ def parsleyfy(klass):
 
     def new_init(self, *args, **kwargs):
         old_init(self, *args, **kwargs)
-        prefix = getattr(getattr(self, 'Meta', None), 'prefix', 'parsley')
+        prefix = getattr(getattr(self, 'Meta', None), 'parsley_namespace', 'parsley')
         for _, field in self.fields.items():
             update_widget_attrs(field, prefix)
         extras = getattr(getattr(self, 'Meta', None), 'parsley_extras', {})
