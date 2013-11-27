@@ -210,7 +210,7 @@ class TestAdminMixin(ParsleyTestCase):
         student_admin = StudentAdmin(Student, admin.site)
         js = student_admin.media.render_js()
         self.assertIn(
-            '<script type="text/javascript" src="/static/parsley/js/parsley-standalone.min.js"></script>',
+            '<script type="text/javascript" src="/static/parsley/js/parsley.min.js"></script>',
             js
         )
         self.assertIn(
@@ -225,7 +225,7 @@ class TestFormMedia(ParsleyTestCase):
         form = FormWithoutMedia()
         js = form.media.render_js()
         self.assertIn(
-            '<script type="text/javascript" src="/static/parsley/js/parsley-standalone.min.js"></script>',
+            '<script type="text/javascript" src="/static/parsley/js/parsley.min.js"></script>',
             js
         )
 
@@ -237,7 +237,7 @@ class TestFormMedia(ParsleyTestCase):
             js
         )
         self.assertIn(
-            '<script type="text/javascript" src="/static/parsley/js/parsley-standalone.min.js"></script>',
+            '<script type="text/javascript" src="/static/parsley/js/parsley.min.js"></script>',
             js
         )
 

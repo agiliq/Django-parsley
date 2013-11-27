@@ -85,11 +85,15 @@ def parsleyfy(klass):
     klass.__init__ = new_init
 
     try:
-        klass.Media.js += ("parsley/js/parsley-standalone.min.js",)
+        klass.Media.js += (
+            "//code.jquery.com/jquery-1.10.1.min.js",
+            "parsley/js/parsley.min.js",
+        )
     except AttributeError:
         class Media:
             js = (
-                "parsley/js/parsley-standalone.min.js",
+                "//code.jquery.com/jquery-1.10.1.min.js",
+                "parsley/js/parsley.min.js",
             )
         klass.Media = Media
 
