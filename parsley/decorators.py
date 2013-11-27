@@ -67,7 +67,7 @@ def parsleyfy(klass):
 
     def new_init(self, *args, **kwargs):
         old_init(self, *args, **kwargs)
-        prefix = getattr(getattr(self, 'Meta', None), 'prefix', 'data')
+        prefix = getattr(getattr(self, 'Meta', None), 'prefix', 'parsley')
         for _, field in self.fields.items():
             update_widget_attrs(field, prefix)
         extras = getattr(getattr(self, 'Meta', None), 'parsley_extras', {})
@@ -84,17 +84,15 @@ def parsleyfy(klass):
                 attrs['data-%s' % key] = value
     klass.__init__ = new_init
 
+    js_media = (
+        "//code.jquery.com/jquery-latest.min.js",
+        "parsley/js/parsley.min.js",
+    )
     try:
-        klass.Media.js += (
-            "//code.jquery.com/jquery-1.10.1.min.js",
-            "parsley/js/parsley.min.js",
-        )
+        klass.Media.js += js_media
     except AttributeError:
         class Media:
-            js = (
-                "//code.jquery.com/jquery-1.10.1.min.js",
-                "parsley/js/parsley.min.js",
-            )
+            js = js_media
         klass.Media = Media
 
     return klass
