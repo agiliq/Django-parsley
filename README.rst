@@ -32,7 +32,22 @@ Installation
 ------------
 
 1. pip install ``django-parsley`` (or add to your requirements.txt)
-2. add ``parsley`` to your ``INSTALLED_APPS`` (required for static files added by mixin)
+2. add ``parsley`` to your ``INSTALLED_APPS`` (required for static files)
+
+Upgrading
+---------
+
+Upgrading from 0.2 to 0.3:
+..........................
+
+If you're using parsley.js < 1.2, make sure to set the ``parsley_namespace`` Meta attribute
+to ``data`` for backward compatibility.
+
+.. code-block:: python
+
+    class Meta:
+        parsley_namespace = 'data'
+
 
 Usage
 -----
@@ -88,10 +103,7 @@ Put this form inside a
 
 .. note::
 
-    The decorator adds jquery and parsley.min.js to form media
-
-.. _form assets: https://docs.djangoproject.com/en/1.6/topics/forms/media/
-
+    The decorator adds jquery and parsley.min.js to `form media_`
 
 Admin
 -----
@@ -149,3 +161,4 @@ For bug reports open a github ticket. Patches gratefully accepted. Need help? `C
 
 .. _parsleyjs: http://parsleyjs.org/
 .. _contact us here: http://agiliq.com/contactus
+.. _form media: https://docs.djangoproject.com/en/1.6/topics/forms/media/
