@@ -101,9 +101,7 @@ Put this form inside a
         {{ form.as_p }}
     </form>
 
-.. note::
-
-    The decorator adds jquery and parsley.min.js to `form media_`
+.. note::  The decorator adds ``jquery`` and ``parsley.min.js`` to form media
 
 Admin
 -----
@@ -115,9 +113,7 @@ To add parsley validations to admin, use the ``ParsleyAdminMixin`` with your ``M
     class StudentAdmin(ParsleyAdminMixin, admin.ModelAdmin):
         pass
 
-.. note::
-
-    The mixin adds an additional script: ``parsley.django-admin.js`` to the admin media.
+.. note:: The mixin adds an additional script: ``parsley.django-admin.js`` to the admin media.
 
 Advanced Usage
 --------------
@@ -161,4 +157,3 @@ For bug reports open a github ticket. Patches gratefully accepted. Need help? `C
 
 .. _parsleyjs: http://parsleyjs.org/
 .. _contact us here: http://agiliq.com/contactus
-.. _form media: https://docs.djangoproject.com/en/1.6/topics/forms/media/
