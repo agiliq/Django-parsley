@@ -20,55 +20,56 @@ FIELD_ATTRS = [
 ]
 
 
-def update_widget_attrs(field):
+def update_widget_attrs(field, prefix='data'):
     attrs = field.widget.attrs
     if field.required:
-        attrs["data-required"] = "true"
+        attrs["{prefix}-required".format(prefix=prefix)] = "true"
 
         error_message = field.error_messages.get('required', None)
         if error_message:
-            attrs["data-required-message"] = error_message
+            attrs["{prefix}-required-message".format(prefix=prefix)] = error_message
 
     if isinstance(field, forms.RegexField):
-        attrs.update({"data-regexp": field.regex.pattern})
+        attrs.update({"{prefix}-regexp".format(prefix=prefix): field.regex.pattern})
 
         error_message = field.error_messages.get('invalid', None)
         if error_message:
-            attrs["data-regexp-message"] = error_message
+            attrs["{prefix}-regexp-message".format(prefix=prefix)] = error_message
 
         if field.regex.flags & re.IGNORECASE:
-            attrs.update({"data-regexp-flag": "i"})
+            attrs.update({"{prefix}-regexp-flag".format(prefix=prefix): "i"})
     if isinstance(field, forms.MultiValueField):
         for subfield in field.fields:
             update_widget_attrs(subfield)
 
-    # Set data-* attributes for parsley based on Django field attributes
+    # Set {prefix}-* attributes for parsley based on Django field attributes
     for attr, data_attr, in FIELD_ATTRS:
         if getattr(field, attr, None):
-            attrs["data-{0}".format(data_attr)] = getattr(field, attr)
+            attrs["{prefix}-{0}".format(data_attr, prefix=prefix)] = getattr(field, attr)
 
             error_message = field.error_messages.get(attr, None)
             if error_message:
-                attrs["data-{0}-message".format(data_attr)] = error_message
+                attrs["{prefix}-{0}-message".format(data_attr, prefix=prefix)] = error_message
 
-    # Set data-type attribute based on Django field instance type
+    # Set {prefix}-type attribute based on Django field instance type
     for klass, field_type in FIELD_TYPES:
         if isinstance(field, klass):
-            attrs["data-type"] = field_type
+            attrs["{prefix}-type".format(prefix=prefix)] = field_type
 
             error_message = field.error_messages.get('invalid', None)
             if error_message:
-                attrs["data-type-{0}-message".format(field_type)] = error_message
+                attrs["{prefix}-type-{0}-message".format(field_type, prefix=prefix)] = error_message
 
 
 def parsleyfy(klass):
-    "A decorator to add data-* attributes to your form.fields"
+    "A decorator to add {prefix}-* attributes to your form.fields"
     old_init = klass.__init__
 
     def new_init(self, *args, **kwargs):
         old_init(self, *args, **kwargs)
+        prefix = getattr(getattr(self, 'Meta', None), 'parsley_namespace', 'parsley')
         for _, field in self.fields.items():
-            update_widget_attrs(field)
+            update_widget_attrs(field, prefix)
         extras = getattr(getattr(self, 'Meta', None), 'parsley_extras', {})
         for field_name, data in extras.items():
             for key, value in data.items():
@@ -76,20 +77,22 @@ def parsleyfy(klass):
                     continue
                 attrs = self.fields[field_name].widget.attrs
                 if key == 'equalto':
-                    # Use HTML id for data-equalto
+                    # Use HTML id for {prefix}-equalto
                     value = '#' + self[value].id_for_label
                 if isinstance(value, bool):
                     value = "true" if value else "false"
-                attrs['data-%s' % key] = value
+                attrs["{prefix}-%s".format(prefix=prefix) % key] = value
     klass.__init__ = new_init
 
+    js_media = (
+        "//code.jquery.com/jquery-latest.min.js",
+        "parsley/js/parsley.min.js",
+    )
     try:
-        klass.Media.js += ("parsley/js/parsley-standalone.min.js",)
+        klass.Media.js += js_media
     except AttributeError:
         class Media:
-            js = (
-                "parsley/js/parsley-standalone.min.js",
-            )
+            js = js_media
         klass.Media = Media
 
     return klass

@@ -156,3 +156,11 @@ class CustomErrorMessageForm(forms.Form):
     name = forms.CharField(error_messages={"max_length": "Please only 30 characters"}, max_length=30, required=False)
     email = forms.EmailField(error_messages={"invalid": "Invalid email"}, required=False)
     favorite_color = forms.CharField(error_messages={"required": "Favorite color is required"})
+
+
+@parsleyfy
+class CustomPrefixForm(forms.Form):
+    name = forms.CharField(required=True)
+
+    class Meta:
+        parsley_namespace = 'custom'

@@ -62,7 +62,7 @@
                             <p>Try submitting this form without entering anything. </p>
                     </div>
                     <h1>Form</h1>
-                    <form data-validate="parsley" action='' method='post'>
+                    <form parsley-validate action='' method='post'>
                         {% csrf_token %}
                         {{ form.as_p }}
                         <input type='submit' value='Submit' class='btn btn-primary btn-large' />

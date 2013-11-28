@@ -21,10 +21,10 @@ What is it?
 -----------
 
 `Parsleyjs`_ is a JavaScript library to do client side data validations.
-It does this in a non-intrusive way via adding a ``data-*`` attributes to form fields.
+It does this in a non-intrusive way via adding a ``parsley-*`` attributes to form fields.
 
 When you define a Django form, you get server side validations for free using
-the form field attributes. Django-parsley adds these validations to client side, by tagging your form with ``data-*`` attributes.
+the form field attributes. Django-parsley adds these validations to client side, by tagging your form with ``parsley-*`` attributes.
 
 Parsley plays well with ``crispy-forms`` et all.
 
@@ -32,7 +32,22 @@ Installation
 ------------
 
 1. pip install ``django-parsley`` (or add to your requirements.txt)
-2. add ``parsley`` to your ``INSTALLED_APPS`` (required for static files added by mixin)
+2. add ``parsley`` to your ``INSTALLED_APPS`` (required for static files)
+
+Upgrading
+---------
+
+Upgrading from 0.2 to 0.3:
+..........................
+
+If you're using parsley.js < 1.2, make sure to set the ``parsley_namespace`` Meta attribute
+to ``data`` for backward compatibility.
+
+.. code-block:: python
+
+    class Meta:
+        parsley_namespace = 'data'
+
 
 Usage
 -----
@@ -60,15 +75,15 @@ Your rendered form's HTML will look like this
 
 .. code-block:: html
 
-    <p><label for="id_name">Name:</label> <input data-required="true" data-minlength="3" maxlength="30" type="text" data-maxlength="30" id="id_name" name="name" /></p>
-    <p><label for="id_url">Url:</label> <input type="text" data-required="true" data-type="url" name="url" id="id_url" /></p>
-    <p><label for="id_url2">Url2:</label> <input type="text" data-type="url" name="url2" id="id_url2" /></p>
-    <p><label for="id_email">Email:</label> <input type="text" data-required="true" data-type="email" name="email" id="id_email" /></p>
-    <p><label for="id_email2">Email2:</label> <input type="text" data-type="email" name="email2" id="id_email2" /></p>
-    <p><label for="id_age">Age:</label> <input type="text" data-required="true" data-type="digits" name="age" id="id_age" /></p>
-    <p><label for="id_income">Income:</label> <input type="text" data-required="true" data-type="number" name="income" id="id_income" /></p>
+    <p><label for="id_name">Name:</label> <input parsley-required="true" parsley-minlength="3" maxlength="30" type="text" parsley-maxlength="30" id="id_name" name="name" /></p>
+    <p><label for="id_url">Url:</label> <input type="text" parsley-required="true" parsley-type="url" name="url" id="id_url" /></p>
+    <p><label for="id_url2">Url2:</label> <input type="text" parsley-type="url" name="url2" id="id_url2" /></p>
+    <p><label for="id_email">Email:</label> <input type="text" parsley-required="true" parsley-type="email" name="email" id="id_email" /></p>
+    <p><label for="id_email2">Email2:</label> <input type="text" parsley-type="email" name="email2" id="id_email2" /></p>
+    <p><label for="id_age">Age:</label> <input type="text" parsley-required="true" parsley-type="digits" name="age" id="id_age" /></p>
+    <p><label for="id_income">Income:</label> <input type="text" parsley-required="true" parsley-type="number" name="income" id="id_income" /></p>
 
-Note the ``data-*`` attributes.
+Note the ``parsley-*`` attributes.
 
 You could also do
 
@@ -82,12 +97,11 @@ Put this form inside a
 
 .. code-block:: html
 
-    <form data-validate="parsley">
+    <form parsley-validate>
         {{ form.as_p }}
     </form>
 
-Include the parsleyjs and you are good to go.
-
+.. note::  The decorator adds ``jquery`` and ``parsley.min.js`` to form media
 
 Admin
 -----
@@ -99,7 +113,7 @@ To add parsley validations to admin, use the ``ParsleyAdminMixin`` with your ``M
     class StudentAdmin(ParsleyAdminMixin, admin.ModelAdmin):
         pass
 
-Note that the above mixin adds two scripts: ``parsley-standalone.min.js`` and ``parsley.django-admin.js`` to the admin media.
+.. note:: The mixin adds an additional script: ``parsley.django-admin.js`` to the admin media.
 
 Advanced Usage
 --------------
@@ -122,6 +136,14 @@ if you wanted to add ``minlength`` and ``equalto`` validations on a ``PasswordCh
                     'error-message': "Your passwords do not match.",
                 },
             }
+
+To use a custom namespace for parsley (e.g when using parsley with the ``data-parsley-namespace``
+option) you can provide a namespace by using the ``parsley_namespace`` Meta attribute.
+
+.. code-block:: python
+
+    class Meta:
+        parsley_namespace = 'custom'
 
 License
 -------

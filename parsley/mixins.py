@@ -8,7 +8,9 @@ class ParsleyAdminMixin(object):
         return parsleyfy(form)
 
     class Media:
+        extend = False
         js = (
-            "parsley/js/parsley-standalone.min.js",
+            "//code.jquery.com/jquery-latest.min.js",
+            "parsley/js/parsley.min.js",
             "parsley/js/parsley.django-admin.js",
         )
