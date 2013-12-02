@@ -52,7 +52,7 @@ to ``data`` for backward compatibility.
 Usage
 -----
 
-``parsley`` provides a single class decorator called ``parsleyfy``. Decorate your ``Form`` with ``parsleyfy`` to get the validations.
+``parsley`` provides a single class decorator called ``parsleyfy``. Decorate your ``Form`` or ``ModelForm`` with ``parsleyfy`` to get the validations.
 
 Eg.
 
