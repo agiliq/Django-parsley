@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html lang='en'>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>document.cookie='resolution='+Math.max(window.outerWidth, 0)+'; path=/';</script>
+        <link href="{{ STATIC_URL }}core/css/bootstrap.min.css" rel="stylesheet" type='text/css'>
+        
+        <link rel="stylesheet" href="{{ STATIC_URL }}core/css/highlighttomorrow.pack.css">
+        <style type='text/css'>
+            ul.parsley-error-list {
+                font-size: 11px;
+                margin: 2px;
+                list-style-type:none;
+            }
+            ul.parsley-error-list li {
+                line-height: 11px;
+                color: #b94a48;
+                background: #f2dede;
+                border: 1px solid #eed3d7;
+            }
+
+            .demoform{
+                padding: 30px;
+                background-color: #FFF8DC;
+                border: 1px solid #E0DCBF;
+                -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),0 1px 0 #ffffff inset;
+                -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),0 1px 0 #ffffff inset;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),0 1px 0 #ffffff inset;
+                color: #444;
+
+            }
+            body{
+                padding-top: 80px;
+            }
+            .codehead{border-bottom: 1px solid #ccc;}
+        </style>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js" ></script> 
+        <script type="text/javascript" src="{{ STATIC_URL }}core/js/highlight.pack.js"></script>     
+        {{ form.media }}
+        <script>
+            $( document ).ready(function() {
+                $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+            });
+        </script>
+    </head>
+    <body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand">Django Parsley</a>
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar-main">
+      <ul class="nav navbar-nav">          
+        <li><a href="/">Form Example</a></li>
+        <li class="divider-vertical"></li>
+        <li><a href="/modelform/">ModelForm Example</a></li>
+        <li class="divider-vertical"></li>
+        <li><a href="http://agiliq.com" target="_blank">Agliliq</a></li>
+        <li class="divider-vertical"></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="container">
+    <div class="bs-example">
+      <div class="jumbotron">
+        <h1><small>Its time to </small>Play !</h1>
+            <p>Try submitting this form without entering anything. </p>
+        <p><a class="btn btn-primary btn-lg" role="button" href="http://github.com/agiliq/Django-Parsley">Fork on github</a></p>
+      </div>
+    </div>
+    {% block contents %}
+    {% endblock %}
+    <hr>
+</div>
+</body>
+</html>

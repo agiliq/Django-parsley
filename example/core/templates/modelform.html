@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block contents %}
+<a class="btn btn-warning btn-lg" href="/" role="button">see Form Example</a>
+<div class="row">
+        <div class="col-lg-6">
+            <h1>ModelForm Example</h1>
+            <p>try submitting wrong `date`, you will get error message from django form validation</p>
+            <div class="demoform">
+                <form class='form-horizontal' parsley-validate action='' method='post'>{% csrf_token %}
+                {{ form|bootstrap }}
+                <input type='submit' value='Submit' class='btn btn-primary btn-large' />
+                </form>                 
+            </div>
+        </div>
+        <div class="col-lg-6">
+        <h1>Usage</h1>
+        <p class="codehead">models.py</p>
+            <div class="highlight"><pre><code class="python">       
+from django.db import models
+class Profile(models.Model):
+  name=models.CharField(max_length=15)
+  dob = models.DateField(blank=True,null=True)
+  summary=  models.TextField()
+  phone=models.CharField(max_length=15, blank=True)
+  city = models.CharField(max_length=100)
+  state = models.CharField(max_length=100)
+  country = models.CharField(max_length=100)
+  zipcode = models.CharField(max_length=10)
+  S_CHOICES = (('Male', 'Male'),('Female', 'Female'),)
+  sex=models.CharField(max_length=10,choices=S_CHOICES)
+            </code></pre></div>
+
+        <p class="codehead">forms.py</p>
+            <div class="highlight"><pre><code class="python">       
+from django import forms
+from parsley.decorators import parsleyfy
+
+@parsleyfy
+class ProfileForm(forms.ModelForm):
+  class Meta:
+    model = Profile
+            </code></pre></div>
+
+        <p class="codehead">views.py</p>
+            <div class="highlight"><pre><code class="python">       
+from django.views.generic.edit import View
+from core.forms import ProfileForm
+from django.shortcuts import render
+class ProfileView(View):
+  def get(self, request):
+    d=dict(form=ProfileForm())
+    return render(request,'modelform.html',d)
+  def post(self,request):
+    form=ProfileForm(request.POST)
+    if form.is_valid():
+      return HttpResponse('success')
+    return render(request,'modelform.html',{'form':form})
+            </code></pre></div>
+
+
+            <p class="codehead">formprofile.html</p>
+            <div class="highlight"><pre><code class="html">
+&lt;form parsley-validate action='' method='post'&gt;&#123;% csrf_token %&#125;
+&#123;&#123; form.as_p &#125;&#125;
+&lt;input type='submit' value='Submit' /&gt;
+&lt;/form&gt;
+            </code></pre></div>
+        </div>
+    </div>
+{% endblock %}

@@ -17,6 +17,11 @@ django-parsley
     :target: https://coveralls.io/r/agiliq/Django-parsley
     :alt: Coverage Status
 
+
+For **documentation**, usage, and examples, see:  
+http://parsley.simplenote.in
+
+
 What is it?
 -----------
 
@@ -27,6 +32,7 @@ When you define a Django form, you get server side validations for free using
 the form field attributes. Django-parsley adds these validations to client side, by tagging your form with ``parsley-*`` attributes.
 
 Parsley plays well with ``crispy-forms`` et all.
+
 
 Installation
 ------------
