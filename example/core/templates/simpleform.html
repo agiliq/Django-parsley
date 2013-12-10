@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block contents %}
+<a class="btn btn-warning btn-lg" href="/modelform/" role="button">see ModelForm Example</a>
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>Form Example</h1>
+            <div class="demoform">
+                <form class='form-horizontal' parsley-validate action='' method='post'>{% csrf_token %}
+                {{ form|bootstrap }}
+                <input type='submit' value='Submit' class='btn btn-primary btn-large' />
+                </form>                 
+            </div>
+        </div>
+        <div class="col-lg-6">
+        <h1>Usage</h1>
+        <p class="codehead">forms.py</p>
+            <div class="highlight"><pre><code class="python">       
+from django import forms
+from parsley.decorators import parsleyfy
+
+@parsleyfy
+class FieldTypeForm(forms.Form):
+  name = forms.CharField(min_length=3, max_length=30)
+  url = forms.URLField()
+  url2 = forms.URLField(required=False)
+  email = forms.EmailField()
+  email2 = forms.EmailField(required=False)
+  age = forms.IntegerField()
+  income = forms.DecimalField()
+            </code></pre></div>
+
+        <p class="codehead">views.py</p>
+            <div class="highlight"><pre><code class="python">       
+from django.views.generic.edit import FormView
+from core.forms import FieldTypeForm
+
+class HomeView(FormView):
+  template_name = "simpleform.html"
+  form_class = FieldTypeForm
+  success_url = '/'
+            </code></pre></div>
+
+            <p class="codehead">formprofile.html</p>
+            <div class="highlight"><pre><code class="html">
+&lt;form parsley-validate action='' method='post'&gt;&#123;% csrf_token %&#125;
+&#123;&#123; form.as_p &#125;&#125;
+&lt;input type='submit' value='Submit' /&gt;
+&lt;/form&gt;
+            </code></pre></div>
+        </div>
+    </div>
+{% endblock %}

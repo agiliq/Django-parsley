@@ -1,6 +1,6 @@
 from django import forms
 from parsley.decorators import parsleyfy
-
+from core.models import Profile
 
 @parsleyfy
 class FieldTypeForm(forms.Form):
@@ -11,3 +11,8 @@ class FieldTypeForm(forms.Form):
     email2 = forms.EmailField(required=False)
     age = forms.IntegerField()
     income = forms.DecimalField()
+
+@parsleyfy
+class ProfileForm(forms.ModelForm):
+	class Meta:
+		model = Profile
