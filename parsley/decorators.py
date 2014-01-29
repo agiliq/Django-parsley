@@ -84,15 +84,4 @@ def parsleyfy(klass):
                 attrs["{prefix}-%s".format(prefix=prefix) % key] = value
     klass.__init__ = new_init
 
-    js_media = (
-        "//code.jquery.com/jquery-latest.min.js",
-        "parsley/js/parsley.min.js",
-    )
-    try:
-        klass.Media.js += js_media
-    except AttributeError:
-        class Media:
-            js = js_media
-        klass.Media = Media
-
     return klass

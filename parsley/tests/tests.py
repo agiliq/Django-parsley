@@ -205,43 +205,6 @@ class TestExtraAttributes(ParsleyTestCase):
         ExtraDataMissingFieldForm()  # No error should be raised
 
 
-class TestAdminMixin(ParsleyTestCase):
-    def test_media(self):
-        student_admin = StudentAdmin(Student, admin.site)
-        js = student_admin.media.render_js()
-        self.assertIn(
-            '<script type="text/javascript" src="/static/parsley/js/parsley.min.js"></script>',
-            js
-        )
-        self.assertIn(
-            '<script type="text/javascript" src="/static/parsley/js/parsley.django-admin.js"></script>',
-            js
-        )
-
-
-class TestFormMedia(ParsleyTestCase):
-
-    def test_form_media(self):
-        form = FormWithoutMedia()
-        js = form.media.render_js()
-        self.assertIn(
-            '<script type="text/javascript" src="/static/parsley/js/parsley.min.js"></script>',
-            js
-        )
-
-    def test_existing_form_media(self):
-        form = FormWithMedia()
-        js = form.media.render_js()
-        self.assertIn(
-            '<script type="text/javascript" src="/static/jquery.min.js"></script>',
-            js
-        )
-        self.assertIn(
-            '<script type="text/javascript" src="/static/parsley/js/parsley.min.js"></script>',
-            js
-        )
-
-
 class TestMultiValueField(ParsleyTestCase):
     def test_parsley_attributes(self):
         form = MultiWidgetForm()
