@@ -7,7 +7,13 @@ from parsley.mixins import ParsleyAdminMixin
 
 
 class MyUserAdmin(ParsleyAdminMixin, UserAdmin):
-    pass
+
+    class Media:
+        js = (
+            "//code.jquery.com/jquery-latest.min.js",
+            "parsley/js/parsley.min.js",
+            "parsley/js/parsley.django-admin.js"
+        )
 
 
 admin.site.unregister(User)
