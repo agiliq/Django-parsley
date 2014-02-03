@@ -122,7 +122,7 @@ setup(
         "Framework :: Django",
     ],
     zip_safe=False,
-    install_requires=["Django"],
-    tests_require=["Django", "six"],
+    install_requires=["Django>=1.3"],
+    tests_require=["Django>=1.3", "six"],
     test_suite='runtests.runtests',
 )
