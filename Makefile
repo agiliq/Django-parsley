@@ -5,6 +5,10 @@ all: init test
 init:
 	pip install tox coverage
 
+clean:
+	pyclean .
+	rm -rf __pycache__ .tox dist django_parsley.egg-info
+
 test:
 	coverage erase
 	tox
