@@ -40,14 +40,13 @@ Upgrading
 Upgrading from 0.2 to 0.3:
 ..........................
 
-If you're using parsley.js < 1.2, make sure to set the ``parsley_namespace`` Meta attribute
-to ``data`` for backward compatibility.
+If you're using parsley.js 1.x, make sure to set the ``parsley_namespace`` Meta attribute
+to ``parsley`` for backward compatibility.
 
 .. code-block:: python
 
     class Meta:
-        parsley_namespace = 'data'
-
+        parsley_namespace = 'parsley'
 
 Usage
 -----
