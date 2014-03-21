@@ -74,13 +74,13 @@ Your rendered form's HTML will look like this
 
 .. code-block:: html
 
-    <p><label for="id_name">Name:</label> <input parsley-required="true" parsley-minlength="3" maxlength="30" type="text" parsley-maxlength="30" id="id_name" name="name" /></p>
-    <p><label for="id_url">Url:</label> <input type="text" parsley-required="true" parsley-type="url" name="url" id="id_url" /></p>
-    <p><label for="id_url2">Url2:</label> <input type="text" parsley-type="url" name="url2" id="id_url2" /></p>
-    <p><label for="id_email">Email:</label> <input type="text" parsley-required="true" parsley-type="email" name="email" id="id_email" /></p>
-    <p><label for="id_email2">Email2:</label> <input type="text" parsley-type="email" name="email2" id="id_email2" /></p>
-    <p><label for="id_age">Age:</label> <input type="text" parsley-required="true" parsley-type="digits" name="age" id="id_age" /></p>
-    <p><label for="id_income">Income:</label> <input type="text" parsley-required="true" parsley-type="number" name="income" id="id_income" /></p>
+    <p><label for="id_name">Name:</label> <input data-parsley-required="true" data-parsley-minlength="3" maxlength="30" type="text" data-parsley-maxlength="30" id="id_name" name="name" /></p>
+    <p><label for="id_url">Url:</label> <input type="text" data-parsley-required="true" data-parsley-type="url" name="url" id="id_url" /></p>
+    <p><label for="id_url2">Url2:</label> <input type="text" data-parsley-type="url" name="url2" id="id_url2" /></p>
+    <p><label for="id_email">Email:</label> <input type="text" data-parsley-required="true" data-parsley-type="email" name="email" id="id_email" /></p>
+    <p><label for="id_email2">Email2:</label> <input type="text" data-parsley-type="email" name="email2" id="id_email2" /></p>
+    <p><label for="id_age">Age:</label> <input type="text" data-parsley-required="true" data-parsley-type="digits" name="age" id="id_age" /></p>
+    <p><label for="id_income">Income:</label> <input type="text" data-parsley-required="true" data-parsley-type="number" name="income" id="id_income" /></p>
 
 Note the ``data-parsley-*`` attributes.
 
