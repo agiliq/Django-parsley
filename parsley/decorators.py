@@ -23,7 +23,7 @@ FIELD_ATTRS = [
 def update_widget_attrs(field, prefix='data'):
     attrs = field.widget.attrs
     if field.required:
-        if isinstance(field, forms.ChoiceField):
+        if isinstance(field.widget, forms.widgets.RadioSelect):
             # Use a mixin, to try and support non-standard renderers if possible
             class ParsleyChoiceFieldRenderer(ParsleyChoiceFieldRendererMixin, field.widget.renderer):
                 parsley_namespace = prefix

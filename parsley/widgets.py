@@ -4,7 +4,7 @@ class ParsleyChoiceFieldRendererMixin(object):
             yield self[i]
 
     def __getitem__(self, idx):
-        choice = self.choices[idx] 
+        choice = self.choices[idx]
         attrs = self.attrs.copy()
         if idx == len(self.choices) - 1:
             attrs["{prefix}-mincheck".format(prefix=self.parsley_namespace)] = "1"

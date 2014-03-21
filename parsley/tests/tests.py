@@ -12,7 +12,7 @@ from .forms import (TextForm, TextForm2, FieldTypeForm, ExtraDataForm,
         ExtraDataMissingFieldForm, FormWithWidgets, StudentModelForm,
         FormWithCleanField, FormWithCustomInit, FormWithCustomChoices,
         FormWithMedia, FormWithoutMedia, MultiWidgetForm, CustomErrorMessageForm,
-        CustomPrefixForm)
+        CustomPrefixForm, FormWithRadioSelect, FormWithRadioSelectNotRequired)
 from .models import Student
 from .admin import StudentAdmin
 
@@ -155,6 +155,22 @@ class TestCustomInit(ParsleyTestCase):
         self.assertNotEqual(len(form.fields['state'].choices), 0)
         self.assertEqual(form.fields['state'].choices,
                     [("NY", "NY"), ("OH", "OH")])
+
+
+class TestRadioSelect(ParsleyTestCase):
+    def test_radio_select(self):
+        form = FormWithRadioSelect()
+        self.assertEqual(form.fields['state'].choices,
+                    [("NY", "NY"), ("OH", "OH")])
+        radio_select_html = form.fields['state'].widget.render("state", "NY")
+        self.assertEqual(1, len(re.findall('data-parsley-mincheck', radio_select_html)))
+
+    def test_radio_select_not_required(self):
+        form = FormWithRadioSelectNotRequired()
+        self.assertEqual(form.fields['state'].choices,
+                    [("NY", "NY"), ("OH", "OH")])
+        radio_select_html = form.fields['state'].widget.render("state", "NY")
+        self.assertEqual(0, len(re.findall('data-parsley-mincheck', radio_select_html)))
 
 
 class TestCleanFields(ParsleyTestCase):

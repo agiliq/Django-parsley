@@ -101,11 +101,20 @@ def get_state_choices():
 
 @parsleyfy
 class FormWithCustomChoices(forms.Form):
-    state = forms.ChoiceField(widget = forms.Select(choices=[]))
+    state = forms.ChoiceField(widget=forms.Select(choices=[]))
     def __init__(self, *args, **kwargs):
         super(FormWithCustomChoices, self).__init__(*args, **kwargs)
         self.fields['state'] = forms.ChoiceField(
             choices=get_state_choices())
+
+@parsleyfy
+class FormWithRadioSelect(forms.Form):
+    state = forms.ChoiceField(choices=get_state_choices(), widget=forms.RadioSelect)
+
+
+@parsleyfy
+class FormWithRadioSelectNotRequired(forms.Form):
+    state = forms.ChoiceField(choices=get_state_choices(), required=False, widget=forms.RadioSelect)
 
 
 @parsleyfy
