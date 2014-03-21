@@ -21,10 +21,10 @@ What is it?
 -----------
 
 `Parsleyjs`_ is a JavaScript library to do client side data validations.
-It does this in a non-intrusive way via adding a ``parsley-*`` attributes to form fields.
+It does this in a non-intrusive way via adding a ``data-parsley-*`` attributes to form fields.
 
 When you define a Django form, you get server side validations for free using
-the form field attributes. Django-parsley adds these validations to client side, by tagging your form with ``parsley-*`` attributes.
+the form field attributes. Django-parsley adds these validations to client side, by tagging your form with ``data-parsley-*`` attributes.
 
 Parsley plays well with ``crispy-forms`` et all.
 
@@ -40,14 +40,13 @@ Upgrading
 Upgrading from 0.2 to 0.3:
 ..........................
 
-If you're using parsley.js < 1.2, make sure to set the ``parsley_namespace`` Meta attribute
-to ``data`` for backward compatibility.
+If you're using parsley.js 1.x, make sure to set the ``parsley_namespace`` Meta attribute
+to ``parsley`` for backward compatibility.
 
 .. code-block:: python
 
     class Meta:
-        parsley_namespace = 'data'
-
+        parsley_namespace = 'parsley'
 
 Usage
 -----
@@ -83,7 +82,7 @@ Your rendered form's HTML will look like this
     <p><label for="id_age">Age:</label> <input type="text" parsley-required="true" parsley-type="digits" name="age" id="id_age" /></p>
     <p><label for="id_income">Income:</label> <input type="text" parsley-required="true" parsley-type="number" name="income" id="id_income" /></p>
 
-Note the ``parsley-*`` attributes.
+Note the ``data-parsley-*`` attributes.
 
 You could also do
 

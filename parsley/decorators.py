@@ -3,8 +3,6 @@ import re
 from django import forms
 from widgets import ParsleyChoiceFieldRendererMixin
 
-DEFAULT_NAMESPACE = 'data-parsley'
-
 FIELD_TYPES = [
     (forms.URLField, "url"),
     (forms.EmailField, "email"),
@@ -74,7 +72,7 @@ def parsleyfy(klass):
 
     def new_init(self, *args, **kwargs):
         old_init(self, *args, **kwargs)
-        prefix = getattr(getattr(self, 'Meta', None), 'parsley_namespace', DEFAULT_NAMESPACE)
+        prefix = getattr(getattr(self, 'Meta', None), 'parsley_namespace', 'data-parsley')
         for _, field in self.fields.items():
             update_widget_attrs(field, prefix)
         extras = getattr(getattr(self, 'Meta', None), 'parsley_extras', {})
