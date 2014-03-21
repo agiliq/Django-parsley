@@ -1,7 +1,9 @@
 import re
 
 from django import forms
+from widgets import ParsleyChoiceFieldRendererMixin
 
+DEFAULT_NAMESPACE = 'data-parsley'
 
 FIELD_TYPES = [
     (forms.URLField, "url"),
@@ -23,11 +25,15 @@ FIELD_ATTRS = [
 def update_widget_attrs(field, prefix='data'):
     attrs = field.widget.attrs
     if field.required:
-        attrs["{prefix}-required".format(prefix=prefix)] = "true"
-
-        error_message = field.error_messages.get('required', None)
-        if error_message:
-            attrs["{prefix}-required-message".format(prefix=prefix)] = error_message
+        if isinstance(field, forms.ChoiceField):
+            class ParsleyChoiceFieldRenderer(ParsleyChoiceFieldRendererMixin, field.widget.renderer):
+                parsley_namespace = prefix
+            field.widget.renderer = ParsleyChoiceFieldRenderer
+        else:
+            attrs["{prefix}-required".format(prefix=prefix)] = "true"
+            error_message = field.error_messages.get('required', None)
+            if error_message:
+                attrs["{prefix}-required-message".format(prefix=prefix)] = error_message
 
     if isinstance(field, forms.RegexField):
         attrs.update({"{prefix}-regexp".format(prefix=prefix): field.regex.pattern})
@@ -38,6 +44,7 @@ def update_widget_attrs(field, prefix='data'):
 
         if field.regex.flags & re.IGNORECASE:
             attrs.update({"{prefix}-regexp-flag".format(prefix=prefix): "i"})
+
     if isinstance(field, forms.MultiValueField):
         for subfield in field.fields:
             update_widget_attrs(subfield)
@@ -67,7 +74,7 @@ def parsleyfy(klass):
 
     def new_init(self, *args, **kwargs):
         old_init(self, *args, **kwargs)
-        prefix = getattr(getattr(self, 'Meta', None), 'parsley_namespace', 'parsley')
+        prefix = getattr(getattr(self, 'Meta', None), 'parsley_namespace', DEFAULT_NAMESPACE)
         for _, field in self.fields.items():
             update_widget_attrs(field, prefix)
         extras = getattr(getattr(self, 'Meta', None), 'parsley_extras', {})
