@@ -24,6 +24,7 @@ def update_widget_attrs(field, prefix='data'):
     attrs = field.widget.attrs
     if field.required:
         if isinstance(field, forms.ChoiceField):
+            # Use a mixin, to try and support non-standard renderers if possible
             class ParsleyChoiceFieldRenderer(ParsleyChoiceFieldRendererMixin, field.widget.renderer):
                 parsley_namespace = prefix
             field.widget.renderer = ParsleyChoiceFieldRenderer
