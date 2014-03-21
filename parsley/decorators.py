@@ -1,7 +1,7 @@
 import re
 
 from django import forms
-from widgets import ParsleyChoiceFieldRendererMixin
+from parsley.widgets import ParsleyChoiceFieldRendererMixin
 
 FIELD_TYPES = [
     (forms.URLField, "url"),
