@@ -96,7 +96,7 @@ Put this form inside a
 
 .. code-block:: html
 
-    <form parsley-validate>
+    <form data-parsley-validate>
         {{ form.as_p }}
     </form>
 
