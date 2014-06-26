@@ -1,29 +1,38 @@
 /*
- * Parsley.js - django admin helper
-*/
+ * Django admin helper for Parsley.js.
+ *
+ * This calls `parsley` for all forms, and sets up event listeners
+ * to handle success and errors on field validation.
+ *
+ * It supports [django-grappelli](https://github.com/sehmaschine/django-grappelli).
+ */
 
-!function ($) {
+(function ($) {
   'use strict';
 
   $( window ).on( 'load', function () {
+    var is_grappelli = $('#grp-container').length;
+    var row_selector = is_grappelli ? '.grp-row' : '.form-row';
+
     $( 'form' ).each( function () {
       $( this ).parsley({
-          animate: false,
-          errors: {
-              errorsWrapper: '<ul class="errorlist"></ul>',
-              container: function (element, isRadioOrCheckbox) {
-                  return $("<div />").prependTo(element.closest(".form-row"));
-              }
-          },
-          listeners: {
-              onFieldError: function (element) {
-                  var container = element.closest(".form-row");
-                  if (container.not(".errors")) {
-                      container.addClass("errors");
-                  }
-              }
+          errorsWrapper: '<ul class="errorlist"></ul>',
+          errorsContainer: function (field) {
+            if (is_grappelli) {
+              // Grappelli appends the errors to the field.
+              return;
+            }
+            return $("<div />").prependTo(
+              field.$element.closest(".form-row"));
           }
+      }).subscribe('parsley:field:error', function (field) {
+          var container = field.$element.closest(row_selector);
+          console.log(container);
+          container.addClass("errors grp-errors");
+      }).subscribe('parsley:field:success', function (field) {
+          var container = field.$element.closest(row_selector);
+          container.removeClass("errors grp-errors");
       });
     } );
   } );
-}(window.jQuery || window.Zepto);
+})(window.jQuery || window.Zepto);
