@@ -12,9 +12,10 @@
 
   $( window ).on( 'load', function () {
     var is_grappelli = $('#grp-container').length;
+    var form_selector = is_grappelli ? '.grp-change-form form' : '.change-form form';
     var row_selector = is_grappelli ? '.grp-row' : '.form-row';
 
-    $( 'form' ).each( function () {
+    $( form_selector ).each( function () {
       $( this ).parsley({
           errorsWrapper: '<ul class="errorlist"></ul>',
           errorsContainer: function (field) {
