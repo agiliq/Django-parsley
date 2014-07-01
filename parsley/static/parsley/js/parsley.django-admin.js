@@ -20,11 +20,16 @@
           errorsWrapper: '<ul class="errorlist"></ul>',
           errorsContainer: function (field) {
             if (is_grappelli) {
-              // Grappelli appends the errors to the field.
-              return;
+              // Grappelli appends the errors to the field (div).
+              // ".grp-tr .grp-td" handles inline forms.
+              return $("<div />").appendTo(
+                field.$element.closest(".grp-tr .grp-td, div")
+              );
             }
             return $("<div />").prependTo(
-              field.$element.closest(".form-row"));
+              // "tr.form-row td" handles inline forms.
+              field.$element.closest("tr.form-row td, div.form-row")
+            );
           }
       }).subscribe('parsley:field:error', function (field) {
           var container = field.$element.closest(row_selector);
