@@ -28,6 +28,11 @@ the form field attributes. Django-parsley adds these validations to client side,
 
 Parsley plays well with ``crispy-forms`` et all.
 
+Demo
+----
+`Demo`_ at https://agiliq.com/demo/parsley/
+
+
 Installation
 ------------
 
@@ -156,3 +161,4 @@ For bug reports open a github ticket. Patches gratefully accepted. Need help? `C
 
 .. _parsleyjs: http://parsleyjs.org/
 .. _contact us here: http://agiliq.com/contactus
+.. _demo: http://agiliq.com/demo/parsley/
