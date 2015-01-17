@@ -22,6 +22,11 @@ if not settings.configured and not os.environ.get('DJANGO_SETTINGS_MODULE'):
         STATIC_URL = "/static/",
     )
 
+    # Setup Django 1.7+ (AppRegistryNotReady).
+    import django
+    if hasattr(django, 'setup'):
+        django.setup()
+
 from django.test.simple import DjangoTestSuiteRunner
 
 
