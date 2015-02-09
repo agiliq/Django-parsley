@@ -2,11 +2,11 @@ django-parsley
 ==============
 
 .. image:: https://pypip.in/d/django-parsley/badge.png
-    :target: https://crate.io/packages/django-parsley
+    :target: https://pypi.python.org/pypi/django-parsley
     :alt: Downloads
 
 .. image:: https://pypip.in/v/django-parsley/badge.png
-    :target: https://crate.io/packages/django-parsley
+    :target: https://pypi.python.org/pypi/django-parsley
     :alt: Latest Release
 
 .. image:: https://travis-ci.org/agiliq/Django-parsley.png?branch=master
