@@ -261,7 +261,7 @@ class TestCustomErrorMessages(TestCase):
         attrs = form.fields['email'].widget.attrs
         self.assertEqual(attrs, {
             "data-parsley-type": "email",
-            "data-parsley-type-email-message": "Invalid email"
+            "data-parsley-type-message": "Invalid email"
         })
 
     def test_override_default_message(self):
