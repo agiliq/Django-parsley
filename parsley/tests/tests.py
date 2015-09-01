@@ -2,7 +2,6 @@ import re
 import six
 
 from django import forms
-from django.contrib import admin
 from django.test import TestCase
 from django.utils.translation import ugettext_lazy as _
 
@@ -11,10 +10,8 @@ from parsley.decorators import parsleyfy
 from .forms import (TextForm, TextForm2, FieldTypeForm, ExtraDataForm,
         ExtraDataMissingFieldForm, FormWithWidgets, StudentModelForm,
         FormWithCleanField, FormWithCustomInit, FormWithCustomChoices,
-        FormWithMedia, FormWithoutMedia, MultiWidgetForm, CustomErrorMessageForm,
+        MultiWidgetForm, CustomErrorMessageForm,
         CustomPrefixForm, FormWithRadioSelect, FormWithRadioSelectNotRequired)
-from .models import Student
-from .admin import StudentAdmin
 
 
 class ParsleyTestCase(TestCase):
