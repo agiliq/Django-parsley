@@ -64,7 +64,7 @@ def update_widget_attrs(field, prefix='data'):
 
             error_message = field.error_messages.get('invalid', None)
             if error_message:
-                attrs["{prefix}-type-{0}-message".format(field_type, prefix=prefix)] = error_message
+                attrs["{prefix}-type-message".format(field_type, prefix=prefix)] = error_message
 
 
 def parsleyfy(klass):
