@@ -78,9 +78,9 @@ class DataTypeTest(ParsleyTestCase):
         self.assertEqual(fields["age"].widget.attrs["data-parsley-type"], "digits")
         self.assertEqual(fields["income"].widget.attrs["data-parsley-type"], "number")
         self.assertEqual(fields["income2"].widget.attrs["data-parsley-type"], "number")
-        self.assertEqual(fields["topnav"].widget.attrs["data-parsley-regexp"], "#[A-Fa-f0-9]{6}")
+        self.assertEqual(fields["topnav"].widget.attrs["data-parsley-pattern"], "#[A-Fa-f0-9]{6}")
         self.assertNotIn("data-parsley-regexp-flag", fields["topnav"].widget.attrs)
-        self.assertEqual(fields["topnav2"].widget.attrs["data-parsley-regexp"], "#[a-z]+")
+        self.assertEqual(fields["topnav2"].widget.attrs["data-parsley-pattern"], "#[a-z]+")
         self.assertEqual(fields["topnav2"].widget.attrs["data-parsley-regexp-flag"], "i")
 
 
@@ -226,19 +226,19 @@ class TestMultiValueField(ParsleyTestCase):
             "data-parsley-minlength": 3,
             "data-parsley-maxlength": 3,
             "maxlength": "3",
-            "data-parsley-regexp": r'^(\d)+$',
+            "data-parsley-pattern": r'^(\d)+$',
         })
         self.assertAttrsEqual(fields[1].widget.attrs, {
             "data-parsley-minlength": 3,
             "data-parsley-maxlength": 3,
             "maxlength": "3",
-            "data-parsley-regexp": r'^(\d)+$',
+            "data-parsley-pattern": r'^(\d)+$',
         })
         self.assertAttrsEqual(fields[2].widget.attrs, {
             "data-parsley-minlength": 4,
             "data-parsley-maxlength": 4,
             "maxlength": "4",
-            "data-parsley-regexp": r'^(\d)+$',
+            "data-parsley-pattern": r'^(\d)+$',
         })
 
 
