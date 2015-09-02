@@ -35,11 +35,11 @@ def update_widget_attrs(field, prefix='data'):
                 attrs["{prefix}-required-message".format(prefix=prefix)] = error_message
 
     if isinstance(field, forms.RegexField):
-        attrs.update({"{prefix}-regexp".format(prefix=prefix): field.regex.pattern})
+        attrs.update({"{prefix}-pattern".format(prefix=prefix): field.regex.pattern})
 
         error_message = field.error_messages.get('invalid', None)
         if error_message:
-            attrs["{prefix}-regexp-message".format(prefix=prefix)] = error_message
+            attrs["{prefix}-pattern-message".format(prefix=prefix)] = error_message
 
         if field.regex.flags & re.IGNORECASE:
             attrs.update({"{prefix}-regexp-flag".format(prefix=prefix): "i"})
