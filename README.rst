@@ -1,11 +1,11 @@
 django-parsley
 ==============
 
-.. image:: https://pypip.in/d/django-parsley/badge.png
+.. image:: https://img.shields.io/pypi/dm/django-parsley.svg
     :target: https://pypi.python.org/pypi/django-parsley
     :alt: Downloads
 
-.. image:: https://pypip.in/v/django-parsley/badge.png
+.. image:: https://img.shields.io/pypi/v/django-parsley.svg
     :target: https://pypi.python.org/pypi/django-parsley
     :alt: Latest Release
 
