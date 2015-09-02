@@ -163,14 +163,14 @@ class TestRadioSelect(ParsleyTestCase):
         self.assertEqual(form.fields['state'].choices,
                     [("NY", "NY"), ("OH", "OH")])
         radio_select_html = form.fields['state'].widget.render("state", "NY")
-        self.assertEqual(1, len(re.findall('data-parsley-mincheck', radio_select_html)))
+        self.assertEqual(1, len(re.findall('data-parsley-required', radio_select_html)))
 
     def test_radio_select_not_required(self):
         form = FormWithRadioSelectNotRequired()
         self.assertEqual(form.fields['state'].choices,
                     [("NY", "NY"), ("OH", "OH")])
         radio_select_html = form.fields['state'].widget.render("state", "NY")
-        self.assertEqual(0, len(re.findall('data-parsley-mincheck', radio_select_html)))
+        self.assertEqual(0, len(re.findall('data-parsley-required', radio_select_html)))
 
 
 class TestCleanFields(ParsleyTestCase):
