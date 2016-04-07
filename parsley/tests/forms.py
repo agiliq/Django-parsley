@@ -70,6 +70,7 @@ class FormWithWidgets(forms.Form):
 class StudentModelForm(forms.ModelForm):
     class Meta:
         model = Student
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(StudentModelForm, self).__init__(*args, **kwargs)

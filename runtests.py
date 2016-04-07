@@ -27,7 +27,7 @@ if not settings.configured and not os.environ.get('DJANGO_SETTINGS_MODULE'):
     if hasattr(django, 'setup'):
         django.setup()
 
-from django.test.simple import DjangoTestSuiteRunner
+from django.test.runner import DiscoverRunner
 
 
 def runtests(*test_args, **kwargs):
@@ -35,7 +35,7 @@ def runtests(*test_args, **kwargs):
         test_args = ['parsley']
     parent = dirname(abspath(__file__))
     sys.path.insert(0, parent)
-    test_runner = DjangoTestSuiteRunner(
+    test_runner = DiscoverRunner(
         verbosity=kwargs.get('verbosity', 1),
         interactive=kwargs.get('interactive', False),
         failfast=kwargs.get('failfast'))
