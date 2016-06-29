@@ -124,6 +124,6 @@ setup(
     ],
     zip_safe=False,
     install_requires=["Django>=1.3,<=1.8.999"],
-    tests_require=["Django>=1.3,<=1.7", "six"],
+    tests_require=["Django>=1.3,<=1.8.999", "six"],
     test_suite='runtests.runtests',
 )
