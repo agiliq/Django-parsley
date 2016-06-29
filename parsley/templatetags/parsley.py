@@ -1,5 +1,5 @@
 from django import template
-from parsley.decorators import parsley_form
+from ..decorators import parsley_form
 
 register = template.Library()
 
