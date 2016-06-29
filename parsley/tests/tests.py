@@ -92,7 +92,8 @@ class LengthTest(ParsleyTestCase):
         self.assertTrue("data-parsley-minlength" in name_attrs)
         self.assertEqual(name_attrs["data-parsley-minlength"], 3)
         self.assertEqual(name_attrs["data-parsley-maxlength"], 30)
-
+        self.assertEqual(fields["amount"].widget.attrs["data-parsley-max"], 999999999999.99)
+        self.assertEqual(fields["amount"].widget.attrs["data-parsley-min"], -999999999999.99)
 
 class ValueTest(ParsleyTestCase):
     def test_value(self):
