@@ -66,6 +66,23 @@ def update_widget_attrs(field, prefix='data'):
             if error_message:
                 attrs["{prefix}-type-message".format(field_type, prefix=prefix)] = error_message
 
+def parsley_form(form):
+    prefix = getattr(getattr(form, 'Meta', None), 'parsley_namespace', 'data-parsley')
+    for _, field in form.fields.items():
+        update_widget_attrs(field, prefix)
+    extras = getattr(getattr(form, 'Meta', None), 'parsley_extras', {})
+    for field_name, data in extras.items():
+        for key, value in data.items():
+            if field_name not in form.fields:
+                continue
+            attrs = form.fields[field_name].widget.attrs
+            if key == 'equalto':
+                # Use HTML id for {prefix}-equalto
+                value = '#' + form[value].id_for_label
+            if isinstance(value, bool):
+                value = "true" if value else "false"
+            attrs["{prefix}-%s".format(prefix=prefix) % key] = value
+    return form
 
 def parsleyfy(klass):
     "A decorator to add {prefix}-* attributes to your form.fields"
@@ -73,21 +90,8 @@ def parsleyfy(klass):
 
     def new_init(self, *args, **kwargs):
         old_init(self, *args, **kwargs)
-        prefix = getattr(getattr(self, 'Meta', None), 'parsley_namespace', 'data-parsley')
-        for _, field in self.fields.items():
-            update_widget_attrs(field, prefix)
-        extras = getattr(getattr(self, 'Meta', None), 'parsley_extras', {})
-        for field_name, data in extras.items():
-            for key, value in data.items():
-                if field_name not in self.fields:
-                    continue
-                attrs = self.fields[field_name].widget.attrs
-                if key == 'equalto':
-                    # Use HTML id for {prefix}-equalto
-                    value = '#' + self[value].id_for_label
-                if isinstance(value, bool):
-                    value = "true" if value else "false"
-                attrs["{prefix}-%s".format(prefix=prefix) % key] = value
+        parsley_form(self)
+
     klass.__init__ = new_init
 
     return klass
