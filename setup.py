@@ -1,4 +1,4 @@
-VERSION = '0.5'
+VERSION = '0.6'
 
 import os
 import sys
@@ -123,7 +123,7 @@ setup(
         "Framework :: Django",
     ],
     zip_safe=False,
-    install_requires=["Django>=1.3,<=1.7"],
+    install_requires=["Django>=1.3,<=1.8"],
     tests_require=["Django>=1.3,<=1.7", "six"],
     test_suite='runtests.runtests',
 )

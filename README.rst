@@ -1,12 +1,12 @@
 django-parsley
 ==============
 
-.. image:: https://pypip.in/d/django-parsley/badge.png
-    :target: https://crate.io/packages/django-parsley
+.. image:: https://img.shields.io/pypi/dm/django-parsley.svg
+    :target: https://pypi.python.org/pypi/django-parsley
     :alt: Downloads
 
-.. image:: https://pypip.in/v/django-parsley/badge.png
-    :target: https://crate.io/packages/django-parsley
+.. image:: https://img.shields.io/pypi/v/django-parsley.svg
+    :target: https://pypi.python.org/pypi/django-parsley
     :alt: Latest Release
 
 .. image:: https://travis-ci.org/agiliq/Django-parsley.png?branch=master
@@ -27,6 +27,11 @@ When you define a Django form, you get server side validations for free using
 the form field attributes. Django-parsley adds these validations to client side, by tagging your form with ``data-parsley-*`` attributes.
 
 Parsley plays well with ``crispy-forms`` et all.
+
+Demo
+----
+`Demo`_ at https://agiliq.com/demo/parsley/
+
 
 Installation
 ------------
@@ -96,7 +101,7 @@ Put this form inside a
 
 .. code-block:: html
 
-    <form parsley-validate>
+    <form data-parsley-validate>
         {{ form.as_p }}
     </form>
 
@@ -156,3 +161,4 @@ For bug reports open a github ticket. Patches gratefully accepted. Need help? `C
 
 .. _parsleyjs: http://parsleyjs.org/
 .. _contact us here: http://agiliq.com/contactus
+.. _demo: http://agiliq.com/demo/parsley/
