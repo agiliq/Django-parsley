@@ -1,11 +1,13 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang='en'>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <script>document.cookie='resolution='+Math.max(window.outerWidth, 0)+'; path=/';</script>
-        <link href="{{ STATIC_URL }}core/css/bootstrap_2.3.2.css" rel="stylesheet" type='text/css'>
-        <link href="{{ STATIC_URL }}core/css/bootstrap-responsive_2.3.2.css" rel="stylesheet" type='text/css'>
+        <link href="{% static 'core/css/bootstrap_2.3.2.css' %}" rel="stylesheet" type='text/css'>
+        <link href="{% static 'core/css/bootstrap-responsive_2.3.2.css' %}" rel="stylesheet" type='text/css'>
         <style type='text/css'>
 
             .row .hero-unit  {
@@ -27,8 +29,8 @@
             */
         </style>
         <script src="http://code.jquery.com/jquery-1.10.1.min.js" ></script>
-        <script src="{{ STATIC_URL }}parsley/js/parsley.js" ></script>
-        <script type='text/javascript' src='{{ STATIC_URL }}core/js/bootstrap-tab.min.js'></script>
+        <script src="{% static 'parsley/js/parsley.js' %}" ></script>
+        <script type='text/javascript' src='{% static "core/js/bootstrap-tab.min.js" %}'></script>
         {{ form.media }}
 
     </head>
@@ -63,7 +65,7 @@
                             <p>Try submitting this form without entering anything. </p>
                     </div>
                     <h1>Form</h1>
-                    <form parsley-validate action='' method='post'>
+                    <form data-parsley-validate action='' method='post'>
                         {% csrf_token %}
                         {{ form.as_p }}
                         <input type='submit' value='Submit' class='btn btn-primary btn-large' />
