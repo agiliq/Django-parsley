@@ -1,4 +1,5 @@
 import re
+import types
 
 from django import forms
 from parsley.widgets import ParsleyChoiceFieldRendererMixin
@@ -24,10 +25,25 @@ def update_widget_attrs(field, prefix='data'):
     attrs = field.widget.attrs
     if field.required:
         if isinstance(field.widget, forms.widgets.RadioSelect):
-            # Use a mixin, to try and support non-standard renderers if possible
-            class ParsleyChoiceFieldRenderer(ParsleyChoiceFieldRendererMixin, field.widget.renderer):
-                parsley_namespace = prefix
-            field.widget.renderer = ParsleyChoiceFieldRenderer
+            try:
+                # django >= 1.11
+                original_create_option = field.widget.create_option
+
+                def new_create_option(self, name, value, label, selected, index, subindex=None, attrs=None):
+                    if index == len(self.choices) - 1:
+                        attrs = attrs or {}
+                        attrs["{prefix}-required".format(prefix=prefix)] = "true"
+
+                    return original_create_option(name, value, label, selected, index, subindex, attrs)
+
+                field.widget.create_option = types.MethodType(new_create_option, field.widget)
+            except AttributeError:
+                # django < 1.11
+
+                # Use a mixin, to try and support non-standard renderers if possible
+                class ParsleyChoiceFieldRenderer(ParsleyChoiceFieldRendererMixin, field.widget.renderer):
+                    parsley_namespace = prefix
+                field.widget.renderer = ParsleyChoiceFieldRenderer
         else:
             attrs["{prefix}-required".format(prefix=prefix)] = "true"
             error_message = field.error_messages.get('required', None)
