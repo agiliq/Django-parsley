@@ -1,4 +1,4 @@
-VERSION = '0.7b1'
+VERSION = '0.7'
 
 import os
 import sys
