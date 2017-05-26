@@ -82,6 +82,7 @@ def update_widget_attrs(field, prefix='data'):
             if error_message:
                 attrs["{prefix}-type-message".format(field_type, prefix=prefix)] = error_message
 
+
 def parsley_form(form):
     prefix = getattr(getattr(form, 'Meta', None), 'parsley_namespace', 'data-parsley')
     for _, field in form.fields.items():
@@ -100,8 +101,12 @@ def parsley_form(form):
             attrs["{prefix}-%s".format(prefix=prefix) % key] = value
     return form
 
+
 def parsleyfy(klass):
-    "A decorator to add {prefix}-* attributes to your form.fields"
+    """
+    A decorator to add {prefix}-* attributes to your form.fields
+    """
+
     old_init = klass.__init__
 
     def new_init(self, *args, **kwargs):

@@ -6,7 +6,6 @@ from .models import Student
 
 
 class TextForm(forms.Form):
-    "A simple form"
     name = forms.CharField(required=True,)
     university = forms.CharField(required=False)
 

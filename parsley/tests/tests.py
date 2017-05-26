@@ -2,10 +2,11 @@ import re
 import six
 
 from django import forms
+from django.template import Context, Template
 from django.test import TestCase
 from django.utils.translation import ugettext_lazy as _
 
-from parsley.decorators import parsleyfy
+from parsley.decorators import parsleyfy, parsley_form
 
 from .forms import (TextForm, TextForm2, FieldTypeForm, ExtraDataForm,
         ExtraDataMissingFieldForm, FormWithWidgets, StudentModelForm,
@@ -35,8 +36,7 @@ class CharFieldTest(ParsleyTestCase):
         form = TextForm()
         self.assertEqual(form.fields["name"].widget.attrs, {})
         self.assertEqual(form.fields["university"].widget.attrs, {})
-        ParsleyForm = parsleyfy(TextForm)
-        form = ParsleyForm()
+        form = parsley_form(TextForm())
         self.assertAttrsEqual(form.fields["name"].widget.attrs, {
             "data-parsley-required": "true",
             "data-parsley-required-message": _("This field is required.")
@@ -117,17 +117,17 @@ class FormWithWidgetsTest(ParsleyTestCase):
 class TestMetadata(ParsleyTestCase):
     def test_docstring(self):
         form1 = TextForm()
-        form2 = parsleyfy(TextForm)()
+        form2 = parsley_form(TextForm())
         self.assertEqual(form1.__doc__, form2.__doc__)
 
     def test_module(self):
         form1 = TextForm()
-        form2 = parsleyfy(TextForm)()
+        form2 = parsley_form(TextForm())
         self.assertEqual(form1.__module__, form2.__module__)
 
     def test_name(self):
         form1 = TextForm()
-        form2 = parsleyfy(TextForm)()
+        form2 = parsley_form(TextForm())
         self.assertEqual(form1.__class__.__name__, form2.__class__.__name__)
 
 
@@ -270,10 +270,11 @@ class TestCustomErrorMessages(TestCase):
             "data-parsley-required-message": "Favorite color is required"
         })
 
+
 class TestCustomPrefix(TestCase):
 
     def test_default_prefix(self):
-        form = TextForm()
+        form = TextForm2()
         attrs = form.fields['name'].widget.attrs
         self.assertTrue('data-parsley-required' in attrs)
 
@@ -281,3 +282,29 @@ class TestCustomPrefix(TestCase):
         form = CustomPrefixForm()
         attrs = form.fields['name'].widget.attrs
         self.assertTrue('custom-required' in attrs)
+
+
+class TemplateTagTest(ParsleyTestCase):
+    def test_basic(self):
+        """
+        Tests that parsleyfy will work using the template tag
+        """
+
+        template = Template("{% load parsley %}")
+        form = TextForm()
+        context = Context({'form': form})
+        template.render(context)
+
+        self.assertEqual(context['form'].fields["name"].widget.attrs, {})
+        self.assertEqual(context['form'].fields["university"].widget.attrs, {})
+
+        template = Template("{% load parsley %}{% parsleyfy form as form %}")
+        form = TextForm()
+        context = Context({'form': form})
+        template.render(context)
+
+        self.assertAttrsEqual(context['form'].fields["name"].widget.attrs, {
+            "data-parsley-required": "true",
+            "data-parsley-required-message": _("This field is required.")
+        })
+        self.assertEqual(context['form'].fields["university"].widget.attrs, {})

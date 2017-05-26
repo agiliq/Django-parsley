@@ -21,6 +21,12 @@ if not settings.configured and not os.environ.get('DJANGO_SETTINGS_MODULE'):
             'parsley',
         ],
         STATIC_URL="/static/",
+        TEMPLATES=[
+            {
+                'BACKEND': 'django.template.backends.django.DjangoTemplates',
+                'APP_DIRS': True,
+            },
+        ]
     )
 
     # Setup Django 1.7+ (AppRegistryNotReady).
