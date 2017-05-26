@@ -9,3 +9,4 @@ _build/
 *.pyc
 test.db
 example/example/settings/local.py
+/.idea

@@ -1,10 +1,11 @@
-VERSION = '0.6'
+VERSION = '0.7b1'
 
 import os
 import sys
 from fnmatch import fnmatchcase
 from distutils.util import convert_path
 from setuptools import setup, find_packages
+
 
 def read(fname):
     try:

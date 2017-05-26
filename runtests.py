@@ -6,6 +6,7 @@ from os.path import dirname, abspath
 from optparse import OptionParser
 
 from django.conf import settings
+from django.test.runner import DiscoverRunner
 
 # For convenience configure settings if they are not pre-configured or if we
 # haven't been provided settings to use by environment variable.
@@ -19,15 +20,13 @@ if not settings.configured and not os.environ.get('DJANGO_SETTINGS_MODULE'):
         INSTALLED_APPS=[
             'parsley',
         ],
-        STATIC_URL = "/static/",
+        STATIC_URL="/static/",
     )
 
     # Setup Django 1.7+ (AppRegistryNotReady).
     import django
     if hasattr(django, 'setup'):
         django.setup()
-
-from django.test.runner import DiscoverRunner
 
 
 def runtests(*test_args, **kwargs):
