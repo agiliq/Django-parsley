@@ -45,10 +45,10 @@ def update_widget_attrs(field, prefix='data'):
                     parsley_namespace = prefix
                 field.widget.renderer = ParsleyChoiceFieldRenderer
         else:
-            attrs["{prefix}-required".format(prefix=prefix)] = "true"
+            attrs["required"] = "true"
             error_message = field.error_messages.get('required', None)
             if error_message:
-                attrs["{prefix}-required-message".format(prefix=prefix)] = error_message
+                attrs["required-message"] = error_message
 
     if isinstance(field, forms.RegexField):
         attrs.update({"{prefix}-pattern".format(prefix=prefix): field.regex.pattern})
